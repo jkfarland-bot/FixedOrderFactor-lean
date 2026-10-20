@@ -32,13 +32,14 @@ sources:
       - "Joseph S. Farland"
     id: "https://doi.org/10.5281/zenodo.23488966"
     type: "article"
-    location: "Preprint, version 1, Zenodo, 20 October 2026, https://doi.org/10.5281/zenodo.23488966"
+    location: "Preprint, Zenodo, 2026, https://doi.org/10.5281/zenodo.23488966 (version 1); version 2 adds Proposition 3.3 and Section 5 (all versions: https://doi.org/10.5281/zenodo.23488965)"
     relationship: "formalizes"
     note: >-
-      The paper and this formalization have the same author. Theorems 2.1, 3.1, 3.2, 3.3, 3.4
-      and 4.1 and Proposition 3.5 are formalized. The identification of the pairs (m, n) with
-      m/n an r-th power as the pairs (d a^r, d b^r), and the passage from the model to the actual
-      primes (Theorem 5.1, quoted from the author's manuscript on fixed-order families), are not.
+      The paper and this formalization have the same author. In the numbering of version 2,
+      Theorems 2.1, 3.1, 3.2, 3.4, 3.5, 4.1 and 5.1, Propositions 3.3 and 3.6 and Corollary 5.2
+      are formalized. Remark 5.3 (exact order by Moebius inversion), the density statement after
+      Corollary 5.2, and the passage from the model to the actual primes (Theorem 6.1, quoted from
+      the author's manuscript on fixed-order families) are not.
       On novelty: the pairs with m/n an r-th power are the diagonal of Elliott's large sieve for
       characters of order k (Proc. London Math. Soc. 1970, Lemma 33) and appear in Lamzouri's work
       on large values of L(1, chi) for k-th order characters; the author found no prior statement of
@@ -94,12 +95,17 @@ status:
     the r-th roots of unity, and the finite random model; Theorem 2.1 (the local factor and its
     limit as r grows); Theorem 3.1 (the Euler products for the correction factor and the model
     mean, as unconditional products over the primes outside N); Theorem 3.2 (the sum over coprime
-    pairs); Theorem 3.3 (the finite model and its limit); Theorem 3.4 (dependence on N, > 1,
-    strictly decreasing in r, limit 1); Proposition 3.5 (the Bernoulli closed form for even r and
-    N empty); and Theorem 4.1 (35/34 and the quartic constants). Not formalized: the
-    identification of the surviving pairs in the remark after Theorem 3.2, the rationality
-    sentence of Proposition 3.5 beyond the closed form, and Theorem 5.1, which is quoted from the
-    author's manuscript and needs the prime ideal theorem over Q(zeta_r) and Siegel's theorem.
+    pairs); Proposition 3.3 (the pairs with m/n an r-th power are (d a^r, d b^r), and they are
+    exactly the pairs kept by the model average E[z^m conj z^n]); Theorem 3.4 (the finite model
+    and its limit); Theorem 3.5 (dependence on N, > 1, strictly decreasing in r, limit 1);
+    Proposition 3.6 (the Bernoulli closed form for even r and N empty); Theorem 4.1 (35/34 and
+    the quartic constants); Theorem 5.1 (for p prime and r | p - 1, the r characters with
+    chi^r = 1 and their orthogonality relation) and Corollary 5.2 (the pairs (d a^r, d b^r)
+    prime to p survive; the full family kills distinct m, n < p). Not formalized: the
+    rationality sentence of Proposition 3.6 beyond the closed form, Remark 5.3, the density
+    statement after Corollary 5.2, and Theorem 6.1, which is quoted from the author's
+    manuscript and needs the prime ideal theorem over Q(zeta_r), the Chebotarev density theorem
+    and Siegel's theorem.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []
@@ -156,7 +162,7 @@ alignment:
       lean: "FixedOrderFactor.tendsto_muAvg"
       module: "Challenge"
       status: "proved"
-    - source: "Theorem 3.3, finite model"
+    - source: "Theorem 3.4, finite model"
       lean: "FixedOrderFactor.modelMean_eq"
       module: "Challenge"
       status: "proved"
@@ -168,7 +174,7 @@ alignment:
       lean: "FixedOrderFactor.hasProd_muAvg"
       module: "Challenge"
       status: "proved"
-    - source: "Theorem 3.3, limit of the model"
+    - source: "Theorem 3.4, limit of the model"
       lean: "FixedOrderFactor.tendsto_modelMean"
       module: "Challenge"
       status: "proved"
@@ -176,24 +182,24 @@ alignment:
       lean: "FixedOrderFactor.hasSum_coprime_pairs"
       module: "Challenge"
       status: "proved"
-    - source: "Proposition 3.5, even order"
+    - source: "Proposition 3.6, even order"
       lean: "FixedOrderFactor.correctionFactor_even"
       module: "Challenge"
       status: "proved"
       note: "Stated for N empty."
-    - source: "Theorem 3.4(1), dependence on N"
+    - source: "Theorem 3.5(1), dependence on N"
       lean: "FixedOrderFactor.correctionFactor_eq_mul"
       module: "Challenge"
       status: "proved"
-    - source: "Theorem 3.4(2), the factor exceeds 1"
+    - source: "Theorem 3.5(2), the factor exceeds 1"
       lean: "FixedOrderFactor.one_lt_correctionFactor"
       module: "Challenge"
       status: "proved"
-    - source: "Theorem 3.4(3), strictly decreasing in r"
+    - source: "Theorem 3.5(3), strictly decreasing in r"
       lean: "FixedOrderFactor.correctionFactor_succ_lt"
       module: "Challenge"
       status: "proved"
-    - source: "Theorem 3.4(4), limit 1"
+    - source: "Theorem 3.5(4), limit 1"
       lean: "FixedOrderFactor.tendsto_correctionFactor"
       module: "Challenge"
       status: "proved"
@@ -207,6 +213,32 @@ alignment:
       status: "proved"
     - source: "Theorem 4.1(3) and (4), the quartic constants"
       lean: "FixedOrderFactor.quartic_constants"
+      module: "Challenge"
+      status: "proved"
+    - source: "Proposition 3.3(1), the surviving pairs"
+      lean: "FixedOrderFactor.div_eq_pow_iff"
+      module: "Challenge"
+      status: "proved"
+    - source: "Proposition 3.3(2), the model keeps exactly the r-th power ratios"
+      lean: "FixedOrderFactor.model_pair_average"
+      module: "Challenge"
+      status: "proved"
+      note: "Roots of unity exp(2 pi i j / r), j < r; expectation as the finite average; r >= 1."
+    - source: "Theorem 5.1, number of characters with chi^r = 1"
+      lean: "FixedOrderFactor.card_char_pow_eq_one"
+      module: "Challenge"
+      status: "proved"
+    - source: "Theorem 5.1, orthogonality"
+      lean: "FixedOrderFactor.sum_char_pow_eq_one"
+      module: "Challenge"
+      status: "proved"
+      note: "The condition on a/b is stated as a = c^r b for a nonzero c in ZMod p."
+    - source: "Corollary 5.2(1)"
+      lean: "FixedOrderFactor.sum_char_pow_eq_one_of_pow"
+      module: "Challenge"
+      status: "proved"
+    - source: "Corollary 5.2(2)"
+      lean: "FixedOrderFactor.sum_char_all"
       module: "Challenge"
       status: "proved"
 

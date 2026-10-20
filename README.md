@@ -34,7 +34,7 @@ No `sorry`, no `native_decide`. Every result depends only on `propext`, `Classic
 ## Layout for the Palomar registry
 
 - `Challenge.lean` is the statement surface a reader should audit. It restates the definitions
-  exactly as the development has them and states the fifteen results with `sorry`.
+  exactly as the development has them and states the twenty-one results with `sorry`.
 - `Solution.lean` proves the same declarations from the development in `FixedOrderFactor/`.
 - `comparator.json` lists the compared theorems and definitions and the permitted axioms.
 - `formalization.yaml` records authorship, sources, AI assistance, scope and fidelity.
@@ -47,15 +47,20 @@ ruby scripts/validate-formalization.rb
 ./scripts/verify-comparator.sh      # needs bubblewrap (bwrap)
 ```
 
+Section numbers refer to version 2 of the paper.
+
 | Paper | Challenge declaration |
 |---|---|
 | Theorem 2.1 (local factor) | `muAvg_eq`, `tendsto_muAvg` |
 | Theorem 3.1 (Euler product) | `hasProd_correctionFactor`, `hasProd_muAvg` |
 | Theorem 3.2 (diagonal) | `hasSum_coprime_pairs` |
-| Theorem 3.3 (model) | `modelMean_eq`, `tendsto_modelMean` |
-| Theorem 3.4 (shape) | `correctionFactor_eq_mul`, `one_lt_correctionFactor`, `correctionFactor_succ_lt`, `tendsto_correctionFactor` |
-| Proposition 3.5 (even order) | `correctionFactor_even` |
+| Proposition 3.3 (surviving pairs) | `div_eq_pow_iff`, `model_pair_average` |
+| Theorem 3.4 (model) | `modelMean_eq`, `tendsto_modelMean` |
+| Theorem 3.5 (shape) | `correctionFactor_eq_mul`, `one_lt_correctionFactor`, `correctionFactor_succ_lt`, `tendsto_correctionFactor` |
+| Proposition 3.6 (even order) | `correctionFactor_even` |
 | **Theorem 4.1 (35/34 and the quartic constants)** | `correctionFactor_four_two`, `localTerm_I_half`, `quartic_constants` |
+| Theorem 5.1 (orthogonality, one prime) | `card_char_pow_eq_one`, `sum_char_pow_eq_one` |
+| Corollary 5.2 | `sum_char_pow_eq_one_of_pow`, `sum_char_all` |
 
 ## Files
 
@@ -68,3 +73,6 @@ ruby scripts/validate-formalization.rb
 | `Order.lean` | dependence on `N`, `> 1`, strictly decreasing in `r`, limit `1` |
 | `Values.lean` | Bernoulli closed form, `B₈ = -1/30`, `35/34` and the quartic constants |
 | `Diagonal.lean` | the sum over coprime pairs, by regrouping pairs by their gcd |
+| `Pairs.lean` | `m/n` is an `r`-th power in `ℚ` iff `(m, n) = (d aʳ, d bʳ)` |
+| `ModelPairs.lean` | the model average `E[z^m conj(z^n)]` |
+| `Characters.lean` | orthogonality for the characters with `χʳ = 1` modulo a prime |
