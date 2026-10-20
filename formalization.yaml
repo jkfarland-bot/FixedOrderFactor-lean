@@ -15,7 +15,14 @@ project:
     For r = 4 and N = {2} it is 35/34, the ratio by which the limit of Louboutin's mean square of
     L(1, chi) with the factor at 2 removed changes when the average is restricted to quartic
     characters; with the forced factor 4/5 at 2 the development also proves the constants pi^2/10,
-    7 pi^2/68, 7 pi^2/36 and 7/136 = (1/20)(35/34) = (7/72)(9/17).
+    7 pi^2/68, 7 pi^2/36 and 7/136 = (1/20)(35/34) = (7/72)(9/17). It also identifies the pairs
+    the model keeps: for positive m, n the average of z^m conj(z^n) is 1 exactly when m/n is an r-th
+    power in Q, that is when (m, n) = (d a^r, d b^r) with a, b coprime, and 0 otherwise. Modulo a
+    single prime p with r | p - 1 it proves the finite-character counterpart: there are exactly r
+    Dirichlet characters mod p with chi^r = 1, the sum of chi(a) conj(chi(b)) over them is r when
+    a/b is a nonzero r-th power mod p and 0 otherwise, so every pair (d a^r, d b^r) prime to p
+    survives with sum r; by contrast, summed over all characters mod p, chi(m) conj(chi(n)) has
+    sum 0 for distinct m, n < p.
   authors:
     - "Joseph S. Farland"
   license: "Apache-2.0"
