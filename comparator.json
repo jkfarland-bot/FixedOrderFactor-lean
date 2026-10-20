@@ -16,7 +16,13 @@
     "FixedOrderFactor.tendsto_correctionFactor",
     "FixedOrderFactor.correctionFactor_four_two",
     "FixedOrderFactor.localTerm_I_half",
-    "FixedOrderFactor.quartic_constants"
+    "FixedOrderFactor.quartic_constants",
+    "FixedOrderFactor.sum_char_pow_eq_one",
+    "FixedOrderFactor.card_char_pow_eq_one",
+    "FixedOrderFactor.sum_char_pow_eq_one_of_pow",
+    "FixedOrderFactor.sum_char_all",
+    "FixedOrderFactor.div_eq_pow_iff",
+    "FixedOrderFactor.model_pair_average"
   ],
   "definition_names": [
     "FixedOrderFactor.PrimeTo",
@@ -28,6 +34,7 @@
     "FixedOrderFactor.muAvg",
     "FixedOrderFactor.modelMean",
     "FixedOrderFactor.primesUpTo",
+    "FixedOrderFactor.zPow",
     "FixedOrderFactor.two"
   ],
   "permitted_axioms": [

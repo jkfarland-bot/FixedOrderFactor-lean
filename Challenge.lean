@@ -33,6 +33,13 @@ Throughout, `r` is a natural number and `N` a finite set of primes, and
 * `correctionFactor_four_two`, `localTerm_I_half`, `quartic_constants`: for quartic characters
   with the factor at `2` removed the correction is `35/34`, and the constants
   `π²/10`, `7π²/68`, `7π²/36` and `7/136 = (1/20)(35/34) = (7/72)(9/17)`.
+* `div_eq_pow_iff`, `model_pair_average`: the pairs `(m, n)` with `m/n` an `r`-th power of a
+  rational number are the pairs `(d aʳ, d bʳ)` with `a, b` coprime, and they are exactly the pairs
+  that survive the model average `E[z^m conj(z^n)]`.
+* `sum_char_pow_eq_one`, `card_char_pow_eq_one`, `sum_char_pow_eq_one_of_pow`, `sum_char_all`:
+  for a prime `p ≡ 1 (mod r)`, the `r` characters with `χʳ = 1` satisfy
+  `∑ χ(a) conj χ(b) = r · [a/b is an r-th power mod p]`, so every pair `(d aʳ, d bʳ)` prime to `p`
+  survives, while the sum over all characters vanishes for distinct `m, n < p`.
 -/
 
 open Real Filter Topology
@@ -74,6 +81,11 @@ def modelMean (r : ℕ) (S : Finset Nat.Primes) : ℝ :=
 def primesUpTo (N : Finset Nat.Primes) (Y : ℕ) : Finset Nat.Primes :=
   ((Finset.range (Y + 1)).preimage (fun q : Nat.Primes => (q : ℕ))
     Nat.Primes.coe_nat_injective.injOn).filter (· ∉ N)
+
+/-- For a choice `j : S → Fin r` of `r`-th roots of unity `z_q = e^{2πi j_q/r}` at the primes of
+`S`, the value `z^m = ∏_{q ∈ S} z_q^{v_q(m)}`. -/
+def zPow (r : ℕ) (S : Finset Nat.Primes) (j : S → Fin r) (m : ℕ) : ℂ :=
+  ∏ q : S, rootOfUnity r ((j q : ℕ) * m.factorization (q : Nat.Primes))
 
 /-- The prime `2` as an element of `Nat.Primes`. -/
 def two : Nat.Primes := ⟨2, Nat.prime_two⟩
@@ -156,5 +168,50 @@ theorem quartic_constants :
     (4 / 5) * zetaN {two} 2 * correctionFactor {two} 4 = 7 * π ^ 2 / 68 ∧
     zetaN ∅ 2 * correctionFactor ∅ 4 = 7 * π ^ 2 / 36 ∧
     (7 : ℝ) / 136 = 1 / 20 * (35 / 34) ∧ (7 : ℝ) / 136 = 7 / 72 * (9 / 17) := sorry
+
+
+open Classical in
+/-- **Orthogonality for characters of order dividing `r`.** For a prime `p` with `r ∣ p - 1`,
+the sum of `χ(a) conj χ(b)` over the characters `χ` modulo `p` with `χʳ = 1` is `r` when
+`a/b` is a nonzero `r`-th power modulo `p`, and `0` otherwise. -/
+theorem sum_char_pow_eq_one (p : ℕ) [Fact p.Prime] {r : ℕ} (hr : r ∣ p - 1) (a b : ZMod p)
+    (hb : b ≠ 0) :
+    ∑ χ ∈ (Finset.univ : Finset (DirichletCharacter ℂ p)).filter (fun χ => χ ^ r = 1),
+        χ a * starRingEnd ℂ (χ b) =
+      if ∃ c : ZMod p, c ≠ 0 ∧ a = c ^ r * b then (r : ℂ) else 0 := sorry
+
+open Classical in
+/-- There are exactly `r` characters modulo `p` with `χʳ = 1` when `r ∣ p - 1`. -/
+theorem card_char_pow_eq_one (p : ℕ) [Fact p.Prime] {r : ℕ} (hr : r ∣ p - 1) :
+    ((Finset.univ : Finset (DirichletCharacter ℂ p)).filter (fun χ => χ ^ r = 1)).card = r := sorry
+
+open Classical in
+/-- If `m = d aʳ` and `n = d bʳ` and `p ∤ m n`, every character of order dividing `r` modulo `p`
+has `χ(m) conj χ(n) = 1`, so these pairs survive the average over the family. -/
+theorem sum_char_pow_eq_one_of_pow (p : ℕ) [Fact p.Prime] {r : ℕ} (hr : r ∣ p - 1)
+    {m n d a b : ℕ} (hm : m = d * a ^ r) (hn : n = d * b ^ r) (hpm : ¬ p ∣ m) (hpn : ¬ p ∣ n) :
+    ∑ χ ∈ (Finset.univ : Finset (DirichletCharacter ℂ p)).filter (fun χ => χ ^ r = 1),
+        χ m * starRingEnd ℂ (χ n) = r := sorry
+
+/-- The full family, for contrast: summed over all characters modulo `p`, `χ(m) conj χ(n)`
+vanishes for distinct `m, n` below `p`. -/
+theorem sum_char_all (p : ℕ) [Fact p.Prime] {m n : ℕ} (hmn : m ≠ n) (hm : m < p) (hn : n < p)
+    (hn0 : n ≠ 0) :
+    ∑ χ : DirichletCharacter ℂ p, χ m * starRingEnd ℂ (χ n) = 0 := sorry
+
+/-- **The surviving pairs.** For positive integers `m, n`, the quotient `m/n` is the `r`-th power
+of a rational number exactly when `m = d aʳ` and `n = d bʳ` with `a, b` coprime. -/
+theorem div_eq_pow_iff {r m n : ℕ} (hr : 0 < r) (hm : 0 < m) (hn : 0 < n) :
+    (∃ q : ℚ, (m : ℚ) / n = q ^ r) ↔
+      ∃ d a b : ℕ, 0 < a ∧ 0 < b ∧ Nat.Coprime a b ∧ m = d * a ^ r ∧ n = d * b ^ r := sorry
+
+open Classical in
+/-- **The model keeps exactly the `r`-th power ratios.** If `z_q` are independent and uniform on
+the `r`-th roots of unity, then `E[z^m conj(z^n)]` is `1` when `m/n` is the `r`-th power of a
+rational number and `0` otherwise (for `m, n ≥ 1` whose prime factors lie in `S`). -/
+theorem model_pair_average {r : ℕ} (hr : 0 < r) (S : Finset Nat.Primes) {m n : ℕ}
+    (hm : 0 < m) (hn : 0 < n) (hS : ∀ q : Nat.Primes, (q : ℕ) ∣ m * n → q ∈ S) :
+    (1 / (r : ℂ) ^ S.card) * ∑ j : S → Fin r, zPow r S j m * starRingEnd ℂ (zPow r S j n) =
+      if ∃ x : ℚ, (m : ℚ) / n = x ^ r then 1 else 0 := sorry
 
 end FixedOrderFactor
