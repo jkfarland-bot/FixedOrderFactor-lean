@@ -1,0 +1,39 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "FixedOrderFactor.muAvg_eq",
+    "FixedOrderFactor.tendsto_muAvg",
+    "FixedOrderFactor.modelMean_eq",
+    "FixedOrderFactor.hasProd_correctionFactor",
+    "FixedOrderFactor.hasProd_muAvg",
+    "FixedOrderFactor.tendsto_modelMean",
+    "FixedOrderFactor.hasSum_coprime_pairs",
+    "FixedOrderFactor.correctionFactor_even",
+    "FixedOrderFactor.correctionFactor_eq_mul",
+    "FixedOrderFactor.one_lt_correctionFactor",
+    "FixedOrderFactor.correctionFactor_succ_lt",
+    "FixedOrderFactor.tendsto_correctionFactor",
+    "FixedOrderFactor.correctionFactor_four_two",
+    "FixedOrderFactor.localTerm_I_half",
+    "FixedOrderFactor.quartic_constants"
+  ],
+  "definition_names": [
+    "FixedOrderFactor.PrimeTo",
+    "FixedOrderFactor.instDecidablePrimeTo",
+    "FixedOrderFactor.zetaN",
+    "FixedOrderFactor.correctionFactor",
+    "FixedOrderFactor.rootOfUnity",
+    "FixedOrderFactor.localTerm",
+    "FixedOrderFactor.muAvg",
+    "FixedOrderFactor.modelMean",
+    "FixedOrderFactor.primesUpTo",
+    "FixedOrderFactor.two"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

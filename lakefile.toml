@@ -1,0 +1,19 @@
+name = "FixedOrderFactor"
+version = "0.1.0"
+defaultTargets = ["FixedOrderFactor", "Challenge", "Solution"]
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4"
+rev = "v4.35.0-rc2"
+
+[[lean_lib]]
+name = "FixedOrderFactor"
+
+[[lean_lib]]
+name = "Challenge"
+roots = ["Challenge"]
+
+[[lean_lib]]
+name = "Solution"
+roots = ["Solution"]
