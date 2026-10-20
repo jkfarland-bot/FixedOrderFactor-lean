@@ -15,3 +15,12 @@ keywords:
   - Lean 4
   - Mathlib
   - formal verification
+preferred-citation:
+  type: article
+  title: "The factor 35/34: fourth powers in the mean square of L(1, chi) over quartic characters"
+  authors:
+    - family-names: Farland
+      given-names: Joseph S.
+  year: 2026
+  doi: 10.5281/zenodo.23488966
+  notes: "Preprint, version 1, Zenodo"

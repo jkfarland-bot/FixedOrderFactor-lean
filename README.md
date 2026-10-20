@@ -1,7 +1,8 @@
 # FixedOrderFactor
 
 Lean 4 / Mathlib formalization accompanying J. S. Farland, *The factor 35/34: fourth powers in
-the mean square of L(1, χ) over quartic characters* (2026).
+the mean square of L(1, χ) over quartic characters* (preprint,
+[doi:10.5281/zenodo.23488966](https://doi.org/10.5281/zenodo.23488966)).
 
 Restricted to the odd quartic characters modulo primes `p ≡ 5 (mod 8)`, Louboutin's mean square of
 `L(1, χ)` with the Euler factor at 2 removed has limit `(35/34)·π²/8` instead of `π²/8`. This
