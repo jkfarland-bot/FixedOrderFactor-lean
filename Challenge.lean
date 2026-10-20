@@ -141,8 +141,16 @@ theorem correctionFactor_four_two : correctionFactor {two} 4 = 35 / 34 := sorry
 theorem localTerm_I_half : localTerm Complex.I (1 / 2) = 4 / 5 ∧
     localTerm (-Complex.I) (1 / 2) = 4 / 5 := sorry
 
-/-- The constants of the quartic family: Louboutin's full-family value `π²/10`, the order-four
-value `7π²/68`, and the relation `7/136 = (1/20)(35/34) = (7/72)(9/17)`. -/
+/-- The constants of the quartic family. Two baselines are involved and are kept apart here.
+`zetaN {two} 2 = π²/8` is the factor-removed full-family value (the limit in Louboutin's
+Théorème 3, with the Euler factor at `2` removed); it is not stated in this theorem. The first
+conjunct, `(4/5) · zetaN {two} 2 = π²/10`, is a different comparison value: the full-family
+model with the factor at `2` reinserted as the single value `4/5 = |1 ∓ i/2|⁻²` that the
+congruence `p ≡ 5 (mod 8)` forces for quartic characters. The second conjunct multiplies this by
+the correction factor `35/34`, giving the order-four value `7π²/68` with the same forced factor.
+The third is the naive random Euler product `ζ(2) · ζ(4)²/ζ(8) = 7π²/36`, with `χ(2)` uniform on
+the fourth roots of unity. The last two conjuncts are the arithmetic relations
+`7/136 = (1/20)(35/34) = (7/72)(9/17)` between the corresponding means of `h⁻/p`. -/
 theorem quartic_constants :
     (4 / 5) * zetaN {two} 2 = π ^ 2 / 10 ∧
     (4 / 5) * zetaN {two} 2 * correctionFactor {two} 4 = 7 * π ^ 2 / 68 ∧
