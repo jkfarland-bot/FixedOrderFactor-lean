@@ -1,0 +1,212 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "FixedOrderFactor: the order-r correction factor for mean squares of L(1, chi), and the factor 35/34"
+  description: >-
+    For an integer r >= 2 and a finite set N of primes, the random Euler product model for
+    Dirichlet characters of order r replaces chi(q) by independent uniform r-th roots of unity.
+    The development proves that the order-r local factor E|1 - z/q|^(-2) equals
+    (1 + q^-r)/((1 - q^-2)(1 - q^-r)), that its ratio to the full-circle factor (1 - q^-2)^(-1),
+    multiplied over the primes outside N, is zeta^(N)(r)^2 / zeta^(N)(2r), that this correction
+    factor is also the sum of (ab)^-r over the coprime pairs of integers prime to N, and that the
+    model mean is zeta^(N)(2) zeta^(N)(r)^2 / zeta^(N)(2r). The factor exceeds 1, decreases
+    strictly in r and tends to 1; for r = 2k and N empty it equals -binom(4k,2k) B_{2k}^2/(2 B_{4k}).
+    For r = 4 and N = {2} it is 35/34, the ratio by which the limit of Louboutin's mean square of
+    L(1, chi) with the factor at 2 removed changes when the average is restricted to quartic
+    characters; with the forced factor 4/5 at 2 the development also proves the constants pi^2/10,
+    7 pi^2/68, 7 pi^2/36 and 7/136 = (1/20)(35/34) = (7/72)(9/17).
+  authors:
+    - "Joseph S. Farland"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "Joseph S. Farland"
+
+classification:
+  arxiv: ["math.NT"]
+  msc2020: ["11M06", "11M20", "11R42", "68V20"]
+
+sources:
+  - title: "The factor 35/34: fourth powers in the mean square of L(1, chi) over quartic characters"
+    authors:
+      - "Joseph S. Farland"
+    type: "article"
+    location: "Manuscript, October 2026"
+    relationship: "formalizes"
+    note: >-
+      The paper and this formalization have the same author. Theorems 2.1, 3.1, 3.2, 3.3, 3.4
+      and 4.1 and Proposition 3.5 are formalized. The identification of the pairs (m, n) with
+      m/n an r-th power as the pairs (d a^r, d b^r), and the passage from the model to the actual
+      primes (Theorem 5.1, quoted from the author's manuscript on fixed-order families), are not.
+      On novelty: the pairs with m/n an r-th power are the diagonal of Elliott's large sieve for
+      characters of order k (Proc. London Math. Soc. 1970, Lemma 33) and appear in Lamzouri's work
+      on large values of L(1, chi) for k-th order characters; the author found no prior statement of
+      the value of the resulting constant or of its comparison with Louboutin's mean values.
+    license: "CC-BY-4.0"
+    author_endorsement: "participated"
+  - title: "Quelques formules exactes pour des moyennes de fonctions L de Dirichlet"
+    authors:
+      - "Stéphane Louboutin"
+    type: "article"
+    location: "Canad. Math. Bull. 36 (1993), 190-196; corrections, ibid. 37 (1994), 89"
+    relationship: "background"
+    note: "Exact formulas and limits for the mean square of L(1, chi) over all odd characters, with Euler factors removed; Théorème 3 gives the limit pi^2/8 that the quartic family multiplies by 35/34."
+    license: "unknown"
+    author_endorsement: "not-contacted"
+  - title: "An exact formula for an average of L-series"
+    authors:
+      - "H. Walum"
+    type: "article"
+    location: "Illinois J. Math. 26 (1982), 1-3"
+    relationship: "background"
+    note: "The mean square of L(1, chi) over the odd characters modulo a prime."
+    license: "unknown"
+    author_endorsement: "n/a"
+  - title: "On the mean value of f(p)"
+    authors:
+      - "P. D. T. A. Elliott"
+    type: "article"
+    location: "Proc. London Math. Soc. (3) 21 (1970), 28-96"
+    relationship: "background"
+    note: "Lemma 33, a large sieve for characters of order k to prime moduli, has as its diagonal the pairs whose ratio is a k-th power."
+    license: "unknown"
+    author_endorsement: "n/a"
+  - title: "Large values of L(1, chi) for k-th order characters chi and applications to character sums"
+    authors:
+      - "Youness Lamzouri"
+    type: "article"
+    location: "Mathematika 63 (2017), 53-71"
+    relationship: "background"
+    note: "Lemma 2.6 and Remark 2.7 use the same diagonal for characters of order k."
+    license: "unknown"
+    author_endorsement: "not-contacted"
+
+related_formalizations:
+  - id: "https://github.com/jkfarland-bot/DedekindSubgroups-lean"
+    relationship: "independent"
+    note: "Companion formalization by the same author on Dedekind sums over subgroups, related to Louboutin's mean values over subgroups; it shares no code with this one."
+
+status:
+  scope: >-
+    Formalized: the definitions of zeta^(N)(s) as a series over integers prime to N, the
+    correction factor, the r-th roots of unity, the local term |1 - z x|^(-2), its average over
+    the r-th roots of unity, and the finite random model; Theorem 2.1 (the local factor and its
+    limit as r grows); Theorem 3.1 (the Euler products for the correction factor and the model
+    mean, as unconditional products over the primes outside N); Theorem 3.2 (the sum over coprime
+    pairs); Theorem 3.3 (the finite model and its limit); Theorem 3.4 (dependence on N, > 1,
+    strictly decreasing in r, limit 1); Proposition 3.5 (the Bernoulli closed form for even r and
+    N empty); and Theorem 4.1 (35/34 and the quartic constants). Not formalized: the
+    identification of the surviving pairs in the remark after Theorem 3.2, the rationality
+    sentence of Proposition 3.5 beyond the closed form, and Theorem 5.1, which is quoted from the
+    author's manuscript and needs the prime ideal theorem over Q(zeta_r) and Siegel's theorem.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: []
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["Claude (Anthropic)"]
+      framework: "Claude.ai with code execution"
+      tool_setup: >-
+        AI-assisted: the Lean code was drafted and repaired by Claude against the paper's
+        statements and proofs, compiled locally with lake, and checked with Palomar's lake
+        comparator script. The mathematics, statements and paper are the author's.
+      cost:
+        wall_time: "about one day"
+        spend_usd: "subscription-based"
+        hardware: "API-only plus local machine"
+      prompting_notes: "The model was given the statements and proofs and asked to formalize them without sorry or native_decide."
+  spend_usd: "subscription-based"
+  notes: >-
+    The author directed the scope (general order r and set N, constants and model only) and
+    reviewed the formal statements in Challenge.lean against the paper. Exact rational arithmetic
+    reproduces every numerical value in the paper.
+
+fidelity:
+  divergences: >-
+    zeta^(N)(s) is defined for natural numbers s as a real series over n >= 1 divisible by no prime
+    of N, and the infinite products are Mathlib's unconditional products (HasProd) over the subtype
+    of primes not in N. The r-th roots of unity are exp(2 pi i j / r) for j = 0, ..., r-1, and the
+    random model is the finite average over all maps from a finite set of primes to
+    {0, ..., r-1}. The limit of the model is taken along the sets of primes q <= Y outside N. The
+    Bernoulli closed form is stated for N empty; the general N case follows from the stated
+    dependence on N. The quartic constants are stated with N = {2} encoded as the singleton of the
+    prime 2.
+
+review:
+  status: "self-assessed"
+  reviewers:
+    - "Joseph S. Farland"
+  notes: >-
+    The author compared each statement in Challenge.lean with the corresponding result of the
+    paper. The definitions in Challenge.lean are copied verbatim from the development and compared
+    by Comparator. No external referee has reviewed the paper or the formalization.
+
+alignment:
+  namespace: "FixedOrderFactor"
+  statements:
+    - source: "Theorem 2.1, local factor"
+      lean: "FixedOrderFactor.muAvg_eq"
+      module: "Challenge"
+      status: "proved"
+      note: "For every r >= 1 and |x| < 1."
+    - source: "Theorem 2.1, limit as r grows"
+      lean: "FixedOrderFactor.tendsto_muAvg"
+      module: "Challenge"
+      status: "proved"
+    - source: "Theorem 3.3, finite model"
+      lean: "FixedOrderFactor.modelMean_eq"
+      module: "Challenge"
+      status: "proved"
+    - source: "Theorem 3.1, Euler product for the correction factor"
+      lean: "FixedOrderFactor.hasProd_correctionFactor"
+      module: "Challenge"
+      status: "proved"
+    - source: "Theorem 3.1, product of the local factors"
+      lean: "FixedOrderFactor.hasProd_muAvg"
+      module: "Challenge"
+      status: "proved"
+    - source: "Theorem 3.3, limit of the model"
+      lean: "FixedOrderFactor.tendsto_modelMean"
+      module: "Challenge"
+      status: "proved"
+    - source: "Theorem 3.2, sum over coprime pairs"
+      lean: "FixedOrderFactor.hasSum_coprime_pairs"
+      module: "Challenge"
+      status: "proved"
+    - source: "Proposition 3.5, even order"
+      lean: "FixedOrderFactor.correctionFactor_even"
+      module: "Challenge"
+      status: "proved"
+      note: "Stated for N empty."
+    - source: "Theorem 3.4(1), dependence on N"
+      lean: "FixedOrderFactor.correctionFactor_eq_mul"
+      module: "Challenge"
+      status: "proved"
+    - source: "Theorem 3.4(2), the factor exceeds 1"
+      lean: "FixedOrderFactor.one_lt_correctionFactor"
+      module: "Challenge"
+      status: "proved"
+    - source: "Theorem 3.4(3), strictly decreasing in r"
+      lean: "FixedOrderFactor.correctionFactor_succ_lt"
+      module: "Challenge"
+      status: "proved"
+    - source: "Theorem 3.4(4), limit 1"
+      lean: "FixedOrderFactor.tendsto_correctionFactor"
+      module: "Challenge"
+      status: "proved"
+    - source: "Theorem 4.1(1), 35/34"
+      lean: "FixedOrderFactor.correctionFactor_four_two"
+      module: "Challenge"
+      status: "proved"
+    - source: "Theorem 4.1(2), the forced factor 4/5 at 2"
+      lean: "FixedOrderFactor.localTerm_I_half"
+      module: "Challenge"
+      status: "proved"
+    - source: "Theorem 4.1(3) and (4), the quartic constants"
+      lean: "FixedOrderFactor.quartic_constants"
+      module: "Challenge"
+      status: "proved"
+
+acknowledgements: "Lean 4 and Mathlib; Claude (Anthropic) for formalization assistance; the Palomar starter template for the check scripts."

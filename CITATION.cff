@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "FixedOrderFactor-lean: a Lean 4 formalization of the order-r correction factor for mean squares of L(1, chi)"
+authors:
+  - family-names: Farland
+    given-names: Joseph S.
+version: v1.0
+date-released: 2026-10-20
+license: Apache-2.0
+repository-code: "https://github.com/jkfarland-bot/FixedOrderFactor-lean"
+keywords:
+  - Dirichlet L-functions
+  - mean values
+  - Euler products
+  - Lean 4
+  - Mathlib
+  - formal verification
