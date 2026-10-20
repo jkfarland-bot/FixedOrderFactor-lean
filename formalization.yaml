@@ -30,9 +30,9 @@ sources:
   - title: "The factor 35/34: fourth powers in the mean square of L(1, chi) over quartic characters"
     authors:
       - "Joseph S. Farland"
-    id: "https://doi.org/10.5281/zenodo.23488966"
+    id: "https://doi.org/10.5281/zenodo.23491467"
     type: "article"
-    location: "Preprint, Zenodo, 2026, https://doi.org/10.5281/zenodo.23488966 (version 1); version 2 adds Proposition 3.3 and Section 5 (all versions: https://doi.org/10.5281/zenodo.23488965)"
+    location: "Preprint, version 2, Zenodo, 20 October 2026, https://doi.org/10.5281/zenodo.23491467 (version 1: https://doi.org/10.5281/zenodo.23488966; all versions: https://doi.org/10.5281/zenodo.23488965)"
     relationship: "formalizes"
     note: >-
       The paper and this formalization have the same author. In the numbering of version 2,
@@ -84,6 +84,9 @@ sources:
     author_endorsement: "not-contacted"
 
 related_formalizations:
+  - id: "https://doi.org/10.5281/zenodo.23489278"
+    relationship: "supersedes"
+    note: "Release v1.0 of this repository. Version 1.1 adds Proposition 3.3, Theorem 5.1 and Corollary 5.2 of the paper's version 2; the statements and proofs of v1.0 are unchanged."
   - id: "https://github.com/jkfarland-bot/DedekindSubgroups-lean"
     relationship: "independent"
     note: "Companion formalization by the same author on Dedekind sums over subgroups, related to Louboutin's mean values over subgroups; it shares no code with this one."
