@@ -25,9 +25,9 @@ project:
     sum 0 for distinct m, n < p. Release v1.2 adds the finite part of the Chebyshev bias in
     families p = a (mod M) of fixed order r: with rho_s(t) the average of exp(2 pi i u t/s) over
     the units u mod s, the sum over t < s of rho_s(c t) is s when s | c and 0 otherwise, so the
-    prime-square term of the explicit formula is s times the square-root count
+    sum giving the prime-square term of the explicit formula is s times the square-root count
     beta(M, a, s) = #{x in (Z/M)^x : x^2 = a (mod M), x = -1 (mod s)}; beta does not decrease as s
-    decreases, at s = r it is 0 unless a is a square in H = ker((Z/M)^x -> (Z/r)^x) and is then the
+    decreases along divisibility, at s = r it is 0 unless a is a square in H = ker((Z/M)^x -> (Z/r)^x) and is then the
     number of square roots of 1 in H; and for the imaginary families (r even, M = 2r, a = 1 + r)
     beta vanishes for every s unless 8 | r, and for s = r/d with d odd in every case.
   authors:
@@ -66,6 +66,19 @@ sources:
       characters of order k (Proc. London Math. Soc. 1970, Lemma 33) and appear in Lamzouri's work
       on large values of L(1, chi) for k-th order characters; the author found no prior statement of
       the value of the resulting constant or of its comparison with Louboutin's mean values.
+    license: "CC-BY-4.0"
+    author_endorsement: "participated"
+  - title: "Fixed-order families: local laws, family conditions, and mean values of L(1, chi)"
+    authors:
+      - "Joseph S. Farland"
+    type: "article"
+    location: "Manuscript (Paper XI of the author's series), 2026"
+    relationship: "formalizes"
+    note: >-
+      Same author. Section 7 (Theorem 7.1, Corollaries 7.3 and 7.4) is the source of Section 7 of
+      the paper's version 3; its finite part (the square-root count, the class criterion and the
+      imaginary-family corollary) is formalized in release v1.2. Theorem 7.1 itself, which needs
+      GRH and the explicit formula, is not.
     license: "CC-BY-4.0"
     author_endorsement: "participated"
   - title: "Quelques formules exactes pour des moyennes de fonctions L de Dirichlet"
@@ -108,7 +121,7 @@ sources:
 related_formalizations:
   - id: "https://doi.org/10.5281/zenodo.23489278"
     relationship: "supersedes"
-    note: "Release v1.0 of this repository. Version 1.1 adds Proposition 3.3, Theorem 5.1 and Corollary 5.2 of the paper's version 2; the statements and proofs of v1.0 are unchanged."
+    note: "Release v1.0 of this repository. Version 1.1 adds Proposition 3.3, Theorem 5.1 and Corollary 5.2 of the paper's version 2, and version 1.2 adds Section 7 of version 3; the statements and proofs of v1.0 are unchanged."
   - id: "https://github.com/jkfarland-bot/DedekindSubgroups-lean"
     relationship: "independent"
     note: "Companion formalization by the same author on Dedekind sums over subgroups, related to Louboutin's mean values over subgroups; it shares no code with this one."
@@ -134,8 +147,9 @@ status:
     average sums and the prime-square term as s times the square-root count), Corollary 7.4 (the
     class criterion) and Corollary 7.5 (imaginary families), and Table 2 by decide. Not formalized
     there: Theorem 7.2 (Chebyshev bias under GRH), the Galois group and Frobenius classes of
-    Q(zeta_M, c^(1/s))/Q, the identification of the prime-square sum with E_g f(g^2), and
-    #H[2] = [H : H^2].
+    Q(zeta_M, c^(1/s))/Q, the consequences E f = 0 and E_g f(g^2) = beta/phi(M), which need the
+    product of Z/s x| (Z/M)^x, #H[2] = [H : H^2], and the translation of Corollary 7.5 to
+    "b is not a square".
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []
@@ -156,7 +170,8 @@ automation:
       prompting_notes: "The model was given the statements and proofs and asked to formalize them without sorry or native_decide."
   spend_usd: "subscription-based"
   notes: >-
-    The author directed the scope (general order r and set N, constants and model only) and
+    The author directed the scope (general order r and set N, constants and model only; in
+    release v1.2, the finite part of the Chebyshev bias from Paper XI) and
     reviewed the formal statements in Challenge.lean against the paper. Exact rational arithmetic
     reproduces every numerical value in the paper.
 

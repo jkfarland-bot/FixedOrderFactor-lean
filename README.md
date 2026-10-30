@@ -23,17 +23,19 @@ for characters of any order `r` with the Euler factors at any finite set `N` of 
   `7/136 = (1/20)(35/34) = (7/72)(9/17)`.
 
 Release v1.2 adds the finite part of how the limits are approached (Section 7 of version 3, from
-Paper XI of the author's series). Under GRH, in the family `p ≡ a (mod M)` the orbit average of
-`χ(b)` has bias `-β/√X`, where `β` counts square roots:
+Paper XI of the author's series). Under GRH and `L(1/2, ρ) ≠ 0`, for `b` odd, prime to `M` and not an
+`r`-th power, in the family `p ≡ a (mod M)` the orbit average of `χ(b)` has bias `-β/√X` in
+logarithmic mean, where `β` counts square roots:
 
 - `β(M, a, s) = #{x ∈ (ℤ/M)ˣ : x² ≡ a (mod M), x ≡ -1 (mod s)}` (`sqrtCount`), with `s = s(b)` the
   order of the Kummer character of `b`;
 - the orbit average `ϱ_s` on a Frobenius class satisfies `∑_{t<s} ϱ_s(ct) = s·[s ∣ c]`, so the
-  class function has mean `0` and the prime-square term is `s · β(M, a, s)`;
-- `β` does not decrease as `s` decreases; at `s = r` it is `0` unless `a` is a square in
+  class function has mean `0` and the sum giving the prime-square term is `s · β(M, a, s)`;
+- `β` does not decrease as `s` decreases along divisibility; at `s = r` it is `0` unless `a` is a square in
   `H = ker((ℤ/M)ˣ → (ℤ/r)ˣ)`, and then it is the number of square roots of `1` in `H`;
 - **imaginary families** (`r` even, `M = 2r`, `a = 1 + r`): `β = 0` for every `s` unless `8 ∣ r`,
-  and `β = 0` for `s = r/d` with `d` odd. At `r = 4` this is `p ≡ 5 (mod 8)`: no leading bias;
+  and `β = 0` for `s = r/d` with `d` odd. At `r = 4` this is `p ≡ 5 (mod 8)`, where no odd `b` has a
+  leading bias;
 - the predicted counts of Paper XI's table, checked by `decide`.
 
 The passage from the model to the primes (the actual limit over `p`) and the bias theorem itself are
