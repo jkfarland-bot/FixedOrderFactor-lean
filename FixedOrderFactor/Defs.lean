@@ -23,6 +23,8 @@ Throughout, `r` is a natural number and `N` is a finite set of primes.
 * `modelMean r S` is the mean of the truncated random Euler product
   `∏_{q ∈ S} |1 - z_q/q|⁻²` over independent uniform `r`-th roots of unity `z_q`.
 * `primesUpTo N Y` is the set of primes `q ≤ Y` not in `N`, and `two` is the prime `2`.
+* `sqrtCount M a s` is the square-root count `β(M, a, s)` of the Chebyshev bias, and
+  `orbitAvg s t` is the average of `e^{2πiut/s}` over the units `u` modulo `s`.
 -/
 
 open Real
@@ -67,5 +69,15 @@ def primesUpTo (N : Finset Nat.Primes) (Y : ℕ) : Finset Nat.Primes :=
 
 /-- The prime `2` as an element of `Nat.Primes`. -/
 def two : Nat.Primes := ⟨2, Nat.prime_two⟩
+
+/-- The square-root count `β(M, a, s)`: the number of units `x` modulo `M` with `x² ≡ a (mod M)`
+and `x ≡ -1 (mod s)`, counted over the representatives `0 ≤ x < M`. -/
+def sqrtCount (M a s : ℕ) : ℕ :=
+  ((Finset.range M).filter fun x => Nat.Coprime x M ∧ x ^ 2 % M = a % M ∧ s ∣ x + 1).card
+
+/-- The orbit average `ϱ_s(t) = φ(s)⁻¹ ∑_{u ∈ (ℤ/s)ˣ} e^{2πi ut/s}` of a character of order `s`
+evaluated at an element whose `s`-th power residue symbol is `e^{2πit/s}`. -/
+def orbitAvg (s t : ℕ) : ℂ :=
+  (1 / (s.totient : ℂ)) * ∑ u ∈ (Finset.range s).filter s.Coprime, rootOfUnity s (u * t)
 
 end FixedOrderFactor

@@ -162,4 +162,60 @@ theorem model_pair_average {r : ℕ} (hr : 0 < r) (S : Finset Nat.Primes) {m n :
       if ∃ x : ℚ, (m : ℚ) / n = x ^ r then 1 else 0 :=
   model_pair_average' hr S hm hn hS
 
+/-- **The orbit average on a Frobenius class.** `∑_{t<s} ϱ_s(ct)` is `s` if `s ∣ c` and `0`
+otherwise. -/
+theorem sum_orbitAvg_mul {s : ℕ} (hs : 0 < s) (c : ℕ) :
+    ∑ t ∈ Finset.range s, orbitAvg s (c * t) = if s ∣ c then (s : ℂ) else 0 :=
+  sum_orbitAvg_mul' hs c
+
+/-- The class function has mean zero: `∑_{t<s} ϱ_s(t) = 0` for `s > 1`. -/
+theorem sum_orbitAvg_eq_zero {s : ℕ} (hs : 1 < s) : ∑ t ∈ Finset.range s, orbitAvg s t = 0 :=
+  sum_orbitAvg_eq_zero' hs
+
+/-- **The square-root count.** With `(t, x)² = ((1 + x)t, x²)` in `ℤ/s ⋊ (ℤ/M)ˣ`, the prime-square
+term of the explicit formula is `∑_{x² ≡ a} ∑_{t<s} ϱ_s((x + 1)t) = s · β(M, a, s)`. -/
+theorem sum_orbitAvg_square {s : ℕ} (hs : 0 < s) (M a : ℕ) :
+    ∑ x ∈ (Finset.range M).filter (fun x => Nat.Coprime x M ∧ x ^ 2 % M = a % M),
+      ∑ t ∈ Finset.range s, orbitAvg s ((x + 1) * t) = s * sqrtCount M a s :=
+  sum_orbitAvg_square' hs M a
+
+/-- `β` is nondecreasing as `s` decreases along divisibility. -/
+theorem sqrtCount_le_of_dvd (M a : ℕ) {s s' : ℕ} (h : s' ∣ s) :
+    sqrtCount M a s ≤ sqrtCount M a s' :=
+  sqrtCount_le_of_dvd' M a h
+
+/-- **At the top level** (`s = r`): `β(M, a, r)` is the number of square roots of `a` in
+`H = {h ∈ (ℤ/M)ˣ : h ≡ 1 (mod r)}`. -/
+theorem sqrtCount_top {M : ℕ} [NeZero M] {r : ℕ} (hr : r ∣ M) (a : ℕ) :
+    sqrtCount M a r = (Finset.univ.filter fun h : ZMod M =>
+      IsUnit h ∧ h ^ 2 = a ∧ ZMod.castHom hr (ZMod r) h = 1).card :=
+  sqrtCount_top' hr a
+
+/-- **The class criterion.** `β(M, a, r)` is `0` unless `a` is the square of an element of `H`,
+and then it equals `β(M, 1, r)`, the number of square roots of `1` in `H`. -/
+theorem sqrtCount_top_dichotomy {M : ℕ} [NeZero M] {r : ℕ} (hr : r ∣ M) (a : ℕ) :
+    sqrtCount M a r = if ∃ h : ZMod M, IsUnit h ∧ h ^ 2 = a ∧ ZMod.castHom hr (ZMod r) h = 1
+      then sqrtCount M 1 r else 0 :=
+  sqrtCount_top_dichotomy' hr a
+
+/-- **Imaginary families.** For even `r`, `M = 2r` and `a = 1 + r`: if `8 ∤ r` then
+`β(2r, 1 + r, s) = 0` for every `s`, and `β(2r, 1 + r, r/d) = 0` whenever `d ∣ r` is odd. -/
+theorem sqrtCount_imaginary {r : ℕ} (hr : 0 < r) (hev : Even r) :
+    (¬ 8 ∣ r → ∀ s, sqrtCount (2 * r) (1 + r) s = 0) ∧
+      (∀ d, d ∣ r → ¬ 2 ∣ d → sqrtCount (2 * r) (1 + r) (r / d) = 0) :=
+  sqrtCount_imaginary' hr hev
+
+/-- The predicted values `β` in the table of Paper XI, Section 7. -/
+theorem sqrtCount_table :
+    sqrtCount 16 1 2 = 4 ∧ sqrtCount 16 9 2 = 4 ∧ sqrtCount 8 5 2 = 0 ∧
+    sqrtCount 12 1 3 = 2 ∧ sqrtCount 12 7 3 = 0 ∧
+    sqrtCount 8 5 4 = 0 ∧ sqrtCount 8 5 2 = 0 ∧
+    sqrtCount 16 1 4 = 2 ∧ sqrtCount 16 1 2 = 4 ∧ sqrtCount 16 9 4 = 2 ∧ sqrtCount 16 9 2 = 4 ∧
+    sqrtCount 12 1 6 = 2 ∧ sqrtCount 12 1 3 = 2 ∧ sqrtCount 12 7 6 = 0 ∧ sqrtCount 12 7 3 = 0 ∧
+    sqrtCount 16 1 8 = 2 ∧ sqrtCount 16 1 4 = 2 ∧ sqrtCount 16 1 2 = 4 ∧
+    sqrtCount 16 9 8 = 0 ∧ sqrtCount 16 9 4 = 2 ∧ sqrtCount 16 9 2 = 4 ∧
+    sqrtCount 32 17 8 = 2 ∧ sqrtCount 32 17 4 = 2 ∧ sqrtCount 32 17 2 = 4 ∧
+    sqrtCount 32 25 8 = 0 ∧ sqrtCount 32 25 4 = 2 ∧ sqrtCount 32 25 2 = 4 :=
+  sqrtCount_table'
+
 end FixedOrderFactor

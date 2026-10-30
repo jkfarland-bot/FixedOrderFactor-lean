@@ -22,7 +22,14 @@ project:
     Dirichlet characters mod p with chi^r = 1, the sum of chi(a) conj(chi(b)) over them is r when
     a/b is a nonzero r-th power mod p and 0 otherwise, so every pair (d a^r, d b^r) prime to p
     survives with sum r; by contrast, summed over all characters mod p, chi(m) conj(chi(n)) has
-    sum 0 for distinct m, n < p.
+    sum 0 for distinct m, n < p. Release v1.2 adds the finite part of the Chebyshev bias in
+    families p = a (mod M) of fixed order r: with rho_s(t) the average of exp(2 pi i u t/s) over
+    the units u mod s, the sum over t < s of rho_s(c t) is s when s | c and 0 otherwise, so the
+    prime-square term of the explicit formula is s times the square-root count
+    beta(M, a, s) = #{x in (Z/M)^x : x^2 = a (mod M), x = -1 (mod s)}; beta does not decrease as s
+    decreases, at s = r it is 0 unless a is a square in H = ker((Z/M)^x -> (Z/r)^x) and is then the
+    number of square roots of 1 in H; and for the imaginary families (r even, M = 2r, a = 1 + r)
+    beta vanishes for every s unless 8 | r, and for s = r/d with d odd in every case.
   authors:
     - "Joseph S. Farland"
   license: "Apache-2.0"
@@ -39,10 +46,18 @@ sources:
       - "Joseph S. Farland"
     id: "https://doi.org/10.5281/zenodo.23491467"
     type: "article"
-    location: "Preprint, version 2, Zenodo, 20 October 2026, https://doi.org/10.5281/zenodo.23491467 (version 1: https://doi.org/10.5281/zenodo.23488966; all versions: https://doi.org/10.5281/zenodo.23488965)"
+    location: "Preprint, Zenodo, 2026, all versions https://doi.org/10.5281/zenodo.23488965 (version 1: https://doi.org/10.5281/zenodo.23488966; version 2: https://doi.org/10.5281/zenodo.23491467; version 3 adds Section 7)"
     relationship: "formalizes"
     note: >-
-      The paper and this formalization have the same author. In the numbering of version 2,
+      The paper and this formalization have the same author. Version 3 adds Section 7: Definition
+      7.1, Proposition 7.3, Corollaries 7.4 and 7.5 and Table 2 are formalized; Theorem 7.2 (the
+      bias under GRH, quoted from the author's Paper XI) and the description of the Galois group of
+      Q(zeta_M, c^(1/s)) are not. On novelty of Section 7: the prime-square term is a case of the
+      general formula of Ng (thesis, 2000, Ch. 5) and Fiorilli and Jouve (J. Inst. Math. Jussieu
+      2023, Theorem 2.1 and Proposition 3.18); the vanishing for 8 not dividing r is the classical
+      fact that a non-square progression has no prime-square term; the author found no prior
+      statement of the evaluation of the count, of the class criterion, or of the vanishing for
+      8 | r unless b is a square. In the numbering of version 2,
       Theorems 2.1, 3.1, 3.2, 3.4, 3.5, 4.1 and 5.1, Propositions 3.3 and 3.6 and Corollary 5.2
       are formalized. Remark 5.3 (exact order by Moebius inversion), the density statement after
       Corollary 5.2, and the passage from the model to the actual primes (Theorem 6.1, quoted from
@@ -115,7 +130,12 @@ status:
     rationality sentence of Proposition 3.6 beyond the closed form, Remark 5.3, the density
     statement after Corollary 5.2, and Theorem 6.1, which is quoted from the author's
     manuscript and needs the prime ideal theorem over Q(zeta_r), the Chebotarev density theorem
-    and Siegel's theorem.
+    and Siegel's theorem. Release v1.2 adds Section 7 of version 3: Proposition 7.3 (the orbit
+    average sums and the prime-square term as s times the square-root count), Corollary 7.4 (the
+    class criterion) and Corollary 7.5 (imaginary families), and Table 2 by decide. Not formalized
+    there: Theorem 7.2 (Chebyshev bias under GRH), the Galois group and Frobenius classes of
+    Q(zeta_M, c^(1/s))/Q, the identification of the prime-square sum with E_g f(g^2), and
+    #H[2] = [H : H^2].
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []
@@ -149,7 +169,12 @@ fidelity:
     {0, ..., r-1}. The limit of the model is taken along the sets of primes q <= Y outside N. The
     Bernoulli closed form is stated for N empty; the general N case follows from the stated
     dependence on N. The quartic constants are stated with N = {2} encoded as the singleton of the
-    prime 2.
+    prime 2. In Section 7, beta(M, a, s) is sqrtCount M a s, a count over the representatives
+    0 <= x < M prime to M with x^2 % M = a % M and s | x + 1, and rho_s(t) is orbitAvg s t with the
+    units mod s taken as 0 <= u < s prime to s. The class criterion describes H through r | M and
+    ZMod.castHom and counts units of ZMod M. Releases v1.0 and v1.1 used Lean and Mathlib
+    v4.35.0-rc2; v1.2 uses v4.35.0, which required one lemma rename in ModelPairs
+    (Nat.prod_factorization_pow_eq_self).
 
 review:
   status: "self-assessed"
@@ -249,6 +274,38 @@ alignment:
       status: "proved"
     - source: "Corollary 5.2(2)"
       lean: "FixedOrderFactor.sum_char_all"
+      module: "Challenge"
+      status: "proved"
+    - source: "Version 3, Proposition 7.3(1), the orbit average on a Frobenius class"
+      lean: "FixedOrderFactor.sum_orbitAvg_mul"
+      module: "Challenge"
+      status: "proved"
+    - source: "Version 3, Proposition 7.3(2), the class function has mean zero"
+      lean: "FixedOrderFactor.sum_orbitAvg_eq_zero"
+      module: "Challenge"
+      status: "proved"
+    - source: "Version 3, Proposition 7.3(3), the prime-square term is s times the square-root count"
+      lean: "FixedOrderFactor.sum_orbitAvg_square"
+      module: "Challenge"
+      status: "proved"
+    - source: "Version 3, Corollary 7.4(1), monotonicity in s"
+      lean: "FixedOrderFactor.sqrtCount_le_of_dvd"
+      module: "Challenge"
+      status: "proved"
+    - source: "Version 3, Corollary 7.4(2), the count at s = r as square roots of a in H"
+      lean: "FixedOrderFactor.sqrtCount_top"
+      module: "Challenge"
+      status: "proved"
+    - source: "Version 3, Corollary 7.4(2), zero unless a is a square in H, then the count at a = 1"
+      lean: "FixedOrderFactor.sqrtCount_top_dichotomy"
+      module: "Challenge"
+      status: "proved"
+    - source: "Version 3, Corollary 7.5, imaginary families"
+      lean: "FixedOrderFactor.sqrtCount_imaginary"
+      module: "Challenge"
+      status: "proved"
+    - source: "Version 3, Table 2, predicted square-root counts"
+      lean: "FixedOrderFactor.sqrtCount_table"
       module: "Challenge"
       status: "proved"
 

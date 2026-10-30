@@ -10,3 +10,4 @@ public import FixedOrderFactor.Diagonal
 public import FixedOrderFactor.Characters
 public import FixedOrderFactor.Pairs
 public import FixedOrderFactor.ModelPairs
+public import FixedOrderFactor.Bias

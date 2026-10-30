@@ -60,7 +60,7 @@ lemma prod_pow_factorization_eq {S : Finset Nat.Primes} {m : ℕ} (hm : 0 < m)
     rw [Finset.mem_map]
     exact ⟨⟨p, hpp⟩, hS ⟨p, hpp⟩ (Nat.dvd_of_mem_primeFactors hp), rfl⟩
   rw [← Finset.prod_subset hsub]
-  · have := Nat.factorization_prod_pow_eq_self hm.ne'
+  · have := Nat.prod_factorization_pow_eq_self hm.ne'
     rw [Finsupp.prod, Nat.support_factorization] at this
     exact_mod_cast this
   · intro p hpS hp

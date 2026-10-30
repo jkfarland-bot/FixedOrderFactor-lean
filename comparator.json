@@ -22,7 +22,15 @@
     "FixedOrderFactor.sum_char_pow_eq_one_of_pow",
     "FixedOrderFactor.sum_char_all",
     "FixedOrderFactor.div_eq_pow_iff",
-    "FixedOrderFactor.model_pair_average"
+    "FixedOrderFactor.model_pair_average",
+    "FixedOrderFactor.sum_orbitAvg_mul",
+    "FixedOrderFactor.sum_orbitAvg_eq_zero",
+    "FixedOrderFactor.sum_orbitAvg_square",
+    "FixedOrderFactor.sqrtCount_le_of_dvd",
+    "FixedOrderFactor.sqrtCount_top",
+    "FixedOrderFactor.sqrtCount_top_dichotomy",
+    "FixedOrderFactor.sqrtCount_imaginary",
+    "FixedOrderFactor.sqrtCount_table"
   ],
   "definition_names": [
     "FixedOrderFactor.PrimeTo",
@@ -35,7 +43,9 @@
     "FixedOrderFactor.modelMean",
     "FixedOrderFactor.primesUpTo",
     "FixedOrderFactor.zPow",
-    "FixedOrderFactor.two"
+    "FixedOrderFactor.two",
+    "FixedOrderFactor.sqrtCount",
+    "FixedOrderFactor.orbitAvg"
   ],
   "permitted_axioms": [
     "propext",

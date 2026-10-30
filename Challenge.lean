@@ -40,6 +40,14 @@ Throughout, `r` is a natural number and `N` a finite set of primes, and
   for a prime `p ≡ 1 (mod r)`, the `r` characters with `χʳ = 1` satisfy
   `∑ χ(a) conj χ(b) = r · [a/b is an r-th power mod p]`, so every pair `(d aʳ, d bʳ)` prime to `p`
   survives, while the sum over all characters vanishes for distinct `m, n < p`.
+* `sum_orbitAvg_mul`, `sum_orbitAvg_eq_zero`, `sum_orbitAvg_square`: the finite part of the
+  Chebyshev bias in families `p ≡ a (mod M)` of fixed order. The orbit average `ϱ_s` on a Frobenius
+  class sums to `s·[s ∣ c]` along `t ↦ ct`, so the class function has mean `0` and the prime-square
+  term is `s` times the square-root count `β(M, a, s) = #{x : x² ≡ a (M), x ≡ -1 (s)}`.
+* `sqrtCount_le_of_dvd`, `sqrtCount_top`, `sqrtCount_top_dichotomy`: the class criterion.
+* `sqrtCount_imaginary`: for the imaginary families `r` even, `M = 2r`, `a = 1 + r`, `β = 0` for
+  every `s` unless `8 ∣ r`, and for `s = r/d` with `d` odd.
+* `sqrtCount_table`: the predicted counts of Paper XI's table.
 -/
 
 open Real Filter Topology
@@ -89,6 +97,16 @@ def zPow (r : ℕ) (S : Finset Nat.Primes) (j : S → Fin r) (m : ℕ) : ℂ :=
 
 /-- The prime `2` as an element of `Nat.Primes`. -/
 def two : Nat.Primes := ⟨2, Nat.prime_two⟩
+
+/-- The square-root count `β(M, a, s)`: the number of units `x` modulo `M` with `x² ≡ a (mod M)`
+and `x ≡ -1 (mod s)`, counted over the representatives `0 ≤ x < M`. -/
+def sqrtCount (M a s : ℕ) : ℕ :=
+  ((Finset.range M).filter fun x => Nat.Coprime x M ∧ x ^ 2 % M = a % M ∧ s ∣ x + 1).card
+
+/-- The orbit average `ϱ_s(t) = φ(s)⁻¹ ∑_{u ∈ (ℤ/s)ˣ} e^{2πi ut/s}` of a character of order `s`
+evaluated at an element whose `s`-th power residue symbol is `e^{2πit/s}`. -/
+def orbitAvg (s t : ℕ) : ℂ :=
+  (1 / (s.totient : ℂ)) * ∑ u ∈ (Finset.range s).filter s.Coprime, rootOfUnity s (u * t)
 
 /-- **Local factor.** -/
 theorem muAvg_eq {r : ℕ} (hr : 0 < r) {x : ℝ} (hx : |x| < 1) :
@@ -213,5 +231,53 @@ theorem model_pair_average {r : ℕ} (hr : 0 < r) (S : Finset Nat.Primes) {m n :
     (hm : 0 < m) (hn : 0 < n) (hS : ∀ q : Nat.Primes, (q : ℕ) ∣ m * n → q ∈ S) :
     (1 / (r : ℂ) ^ S.card) * ∑ j : S → Fin r, zPow r S j m * starRingEnd ℂ (zPow r S j n) =
       if ∃ x : ℚ, (m : ℚ) / n = x ^ r then 1 else 0 := sorry
+
+/-- **The orbit average on a Frobenius class.** `∑_{t<s} ϱ_s(ct)` is `s` if `s ∣ c` and `0`
+otherwise. -/
+theorem sum_orbitAvg_mul {s : ℕ} (hs : 0 < s) (c : ℕ) :
+    ∑ t ∈ Finset.range s, orbitAvg s (c * t) = if s ∣ c then (s : ℂ) else 0 := sorry
+
+/-- The class function has mean zero: `∑_{t<s} ϱ_s(t) = 0` for `s > 1`. -/
+theorem sum_orbitAvg_eq_zero {s : ℕ} (hs : 1 < s) : ∑ t ∈ Finset.range s, orbitAvg s t = 0 := sorry
+
+/-- **The square-root count.** With `(t, x)² = ((1 + x)t, x²)` in `ℤ/s ⋊ (ℤ/M)ˣ`, the prime-square
+term of the explicit formula is `∑_{x² ≡ a} ∑_{t<s} ϱ_s((x + 1)t) = s · β(M, a, s)`. -/
+theorem sum_orbitAvg_square {s : ℕ} (hs : 0 < s) (M a : ℕ) :
+    ∑ x ∈ (Finset.range M).filter (fun x => Nat.Coprime x M ∧ x ^ 2 % M = a % M),
+      ∑ t ∈ Finset.range s, orbitAvg s ((x + 1) * t) = s * sqrtCount M a s := sorry
+
+/-- `β` is nondecreasing as `s` decreases along divisibility. -/
+theorem sqrtCount_le_of_dvd (M a : ℕ) {s s' : ℕ} (h : s' ∣ s) :
+    sqrtCount M a s ≤ sqrtCount M a s' := sorry
+
+/-- **At the top level** (`s = r`): `β(M, a, r)` is the number of square roots of `a` in
+`H = {h ∈ (ℤ/M)ˣ : h ≡ 1 (mod r)}`. -/
+theorem sqrtCount_top {M : ℕ} [NeZero M] {r : ℕ} (hr : r ∣ M) (a : ℕ) :
+    sqrtCount M a r = (Finset.univ.filter fun h : ZMod M =>
+      IsUnit h ∧ h ^ 2 = a ∧ ZMod.castHom hr (ZMod r) h = 1).card := sorry
+
+/-- **The class criterion.** `β(M, a, r)` is `0` unless `a` is the square of an element of `H`,
+and then it equals `β(M, 1, r)`, the number of square roots of `1` in `H`. -/
+theorem sqrtCount_top_dichotomy {M : ℕ} [NeZero M] {r : ℕ} (hr : r ∣ M) (a : ℕ) :
+    sqrtCount M a r = if ∃ h : ZMod M, IsUnit h ∧ h ^ 2 = a ∧ ZMod.castHom hr (ZMod r) h = 1
+      then sqrtCount M 1 r else 0 := sorry
+
+/-- **Imaginary families.** For even `r`, `M = 2r` and `a = 1 + r`: if `8 ∤ r` then
+`β(2r, 1 + r, s) = 0` for every `s`, and `β(2r, 1 + r, r/d) = 0` whenever `d ∣ r` is odd. -/
+theorem sqrtCount_imaginary {r : ℕ} (hr : 0 < r) (hev : Even r) :
+    (¬ 8 ∣ r → ∀ s, sqrtCount (2 * r) (1 + r) s = 0) ∧
+      (∀ d, d ∣ r → ¬ 2 ∣ d → sqrtCount (2 * r) (1 + r) (r / d) = 0) := sorry
+
+/-- The predicted values `β` in the table of Paper XI, Section 7. -/
+theorem sqrtCount_table :
+    sqrtCount 16 1 2 = 4 ∧ sqrtCount 16 9 2 = 4 ∧ sqrtCount 8 5 2 = 0 ∧
+    sqrtCount 12 1 3 = 2 ∧ sqrtCount 12 7 3 = 0 ∧
+    sqrtCount 8 5 4 = 0 ∧ sqrtCount 8 5 2 = 0 ∧
+    sqrtCount 16 1 4 = 2 ∧ sqrtCount 16 1 2 = 4 ∧ sqrtCount 16 9 4 = 2 ∧ sqrtCount 16 9 2 = 4 ∧
+    sqrtCount 12 1 6 = 2 ∧ sqrtCount 12 1 3 = 2 ∧ sqrtCount 12 7 6 = 0 ∧ sqrtCount 12 7 3 = 0 ∧
+    sqrtCount 16 1 8 = 2 ∧ sqrtCount 16 1 4 = 2 ∧ sqrtCount 16 1 2 = 4 ∧
+    sqrtCount 16 9 8 = 0 ∧ sqrtCount 16 9 4 = 2 ∧ sqrtCount 16 9 2 = 4 ∧
+    sqrtCount 32 17 8 = 2 ∧ sqrtCount 32 17 4 = 2 ∧ sqrtCount 32 17 2 = 4 ∧
+    sqrtCount 32 25 8 = 0 ∧ sqrtCount 32 25 4 = 2 ∧ sqrtCount 32 25 2 = 4 := sorry
 
 end FixedOrderFactor
