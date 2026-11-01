@@ -44,9 +44,9 @@ sources:
   - title: "The factor 35/34: fourth powers in the mean square of L(1, chi) over quartic characters"
     authors:
       - "Joseph S. Farland"
-    id: "https://doi.org/10.5281/zenodo.23491467"
+    id: "https://doi.org/10.5281/zenodo.23849628"
     type: "article"
-    location: "Preprint, Zenodo, 2026, all versions https://doi.org/10.5281/zenodo.23488965 (version 1: https://doi.org/10.5281/zenodo.23488966; version 2: https://doi.org/10.5281/zenodo.23491467; version 3 adds Section 7)"
+    location: "Preprint, Zenodo, 2026, all versions https://doi.org/10.5281/zenodo.23488965 (version 1: https://doi.org/10.5281/zenodo.23488966; version 2: https://doi.org/10.5281/zenodo.23491467; version 3, which adds Section 7: https://doi.org/10.5281/zenodo.23849628)"
     relationship: "formalizes"
     note: >-
       The paper and this formalization have the same author. Version 3 adds Section 7: Definition

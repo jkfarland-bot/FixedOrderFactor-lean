@@ -3,10 +3,12 @@
 Lean 4 / Mathlib formalization accompanying J. S. Farland, *The factor 35/34: fourth powers in
 the mean square of L(1, χ) over quartic characters* (preprint, Zenodo; all versions
 [doi:10.5281/zenodo.23488965](https://doi.org/10.5281/zenodo.23488965); version 2 is
-[doi:10.5281/zenodo.23491467](https://doi.org/10.5281/zenodo.23491467), and version 3 adds Section 7).
+[doi:10.5281/zenodo.23491467](https://doi.org/10.5281/zenodo.23491467), and version 3, which adds Section 7, is
+[doi:10.5281/zenodo.23849628](https://doi.org/10.5281/zenodo.23849628).
 
 Archived on Zenodo: [doi:10.5281/zenodo.23489277](https://doi.org/10.5281/zenodo.23489277)
-(all versions; release v1.0 is [doi:10.5281/zenodo.23489278](https://doi.org/10.5281/zenodo.23489278)).
+(all versions; release v1.0 is [doi:10.5281/zenodo.23489278](https://doi.org/10.5281/zenodo.23489278), and release v1.2 is
+[doi:10.5281/zenodo.23849519](https://doi.org/10.5281/zenodo.23849519)).
 
 Restricted to the odd quartic characters modulo primes `p ≡ 5 (mod 8)`, Louboutin's mean square of
 `L(1, χ)` with the Euler factor at 2 removed has limit `(35/34)·π²/8` instead of `π²/8`. This
