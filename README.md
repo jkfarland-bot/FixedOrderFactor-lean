@@ -32,7 +32,12 @@ logarithmic mean, where `β` counts square roots:
 - `β(M, a, s) = #{x ∈ (ℤ/M)ˣ : x² ≡ a (mod M), x ≡ -1 (mod s)}` (`sqrtCount`), with `s = s(b)` the
   order of the Kummer character of `b`;
 - the orbit average `ϱ_s` on a Frobenius class satisfies `∑_{t<s} ϱ_s(ct) = s·[s ∣ c]`, so the
-  class function has mean `0` and the sum giving the prime-square term is `s · β(M, a, s)`;
+  class function has mean `0`;
+- for `M > 0` and `s ∣ M`, `β(M, a, s)` counts residue classes (`sqrtCount_eq_card_zmod`), and the
+  squares in `ℤ/s ⋊ (ℤ/M)ˣ` give the prime-square term as `s · β(M, a, s)` (`sum_orbitAvg_square`).
+  The same identity over the representatives `0 ≤ x < M` holds for all `M` and `s > 0`
+  (`sum_orbitAvg_square_finite`), but outside `M > 0`, `s ∣ M` it is only an identity of arithmetic
+  counts: it is vacuous at `M = 0`, and for `s ∤ M` the count depends on the representatives;
 - `β` does not decrease as `s` decreases along divisibility; at `s = r` it is `0` unless `a` is a square in
   `H = ker((ℤ/M)ˣ → (ℤ/r)ˣ)`, and then it is the number of square roots of `1` in `H`;
 - **imaginary families** (`r` even, `M = 2r`, `a = 1 + r`): `β = 0` for every `s` unless `8 ∣ r`,
@@ -84,7 +89,7 @@ Section numbers refer to version 3 of the paper (Sections 1 to 6 are numbered as
 | **Theorem 4.1 (35/34 and the quartic constants)** | `correctionFactor_four_two`, `localTerm_I_half`, `quartic_constants` |
 | Theorem 5.1 (orthogonality, one prime) | `card_char_pow_eq_one`, `sum_char_pow_eq_one` |
 | Corollary 5.2 | `sum_char_pow_eq_one_of_pow`, `sum_char_all` |
-| Proposition 7.3 (square-root count) | `sum_orbitAvg_mul`, `sum_orbitAvg_eq_zero`, `sum_orbitAvg_square` |
+| Proposition 7.3 (square-root count) | `sum_orbitAvg_mul`, `sum_orbitAvg_eq_zero`, `sqrtCount_eq_card_zmod`, `sum_orbitAvg_square` (for `M > 0`, `s ∣ M`); `sum_orbitAvg_square_finite` (the finite-sum identity) |
 | Corollary 7.4 (class criterion) | `sqrtCount_le_of_dvd`, `sqrtCount_top`, `sqrtCount_top_dichotomy` |
 | **Corollary 7.5 (imaginary families)** | `sqrtCount_imaginary` |
 | Table 2 | `sqrtCount_table` |

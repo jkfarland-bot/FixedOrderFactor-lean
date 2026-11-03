@@ -70,8 +70,11 @@ def primesUpTo (N : Finset Nat.Primes) (Y : ℕ) : Finset Nat.Primes :=
 /-- The prime `2` as an element of `Nat.Primes`. -/
 def two : Nat.Primes := ⟨2, Nat.prime_two⟩
 
-/-- The square-root count `β(M, a, s)`: the number of units `x` modulo `M` with `x² ≡ a (mod M)`
-and `x ≡ -1 (mod s)`, counted over the representatives `0 ≤ x < M`. -/
+/-- The square-root count `β(M, a, s)`: the number of `0 ≤ x < M` prime to `M` with
+`x² ≡ a (mod M)` and `x ≡ -1 (mod s)`. It is defined for all `M` and `s` as a count over these
+representatives; it is `0` at `M = 0`. For `M > 0` and `s ∣ M` it counts the residue classes
+`y ∈ (ℤ/M)ˣ` with `y² = a` and `y ≡ -1 (mod s)` (`sqrtCount_eq_card_zmod`), and only then does it
+carry the reading as the prime-square term of the Chebyshev bias (`sum_orbitAvg_square`). -/
 def sqrtCount (M a s : ℕ) : ℕ :=
   ((Finset.range M).filter fun x => Nat.Coprime x M ∧ x ^ 2 % M = a % M ∧ s ∣ x + 1).card
 

@@ -24,9 +24,12 @@ project:
     survives with sum r; by contrast, summed over all characters mod p, chi(m) conj(chi(n)) has
     sum 0 for distinct m, n < p. Release v1.2 adds the finite part of the Chebyshev bias in
     families p = a (mod M) of fixed order r: with rho_s(t) the average of exp(2 pi i u t/s) over
-    the units u mod s, the sum over t < s of rho_s(c t) is s when s | c and 0 otherwise, so the
-    sum giving the prime-square term of the explicit formula is s times the square-root count
-    beta(M, a, s) = #{x in (Z/M)^x : x^2 = a (mod M), x = -1 (mod s)}; beta does not decrease as s
+    the units u mod s, the sum over t < s of rho_s(c t) is s when s | c and 0 otherwise; for
+    M > 0 and s | M the squares in Z/s x| (Z/M)^x give the prime-square term of the explicit
+    formula as s times the square-root count beta(M, a, s) = #{y in (Z/M)^x : y^2 = a,
+    y = -1 (mod s)}, a count of residue classes (the same finite-sum identity over the
+    representatives 0 <= x < M holds for all M and s > 0, but is only an arithmetic identity
+    there: vacuous at M = 0, representative-dependent when s does not divide M); beta does not decrease as s
     decreases along divisibility, at s = r it is 0 unless a is a square in H = ker((Z/M)^x -> (Z/r)^x) and is then the
     number of square roots of 1 in H; and for the imaginary families (r even, M = 2r, a = 1 + r)
     beta vanishes for every s unless 8 | r, and for s = r/d with d odd in every case.
@@ -186,7 +189,13 @@ fidelity:
     dependence on N. The quartic constants are stated with N = {2} encoded as the singleton of the
     prime 2. In Section 7, beta(M, a, s) is sqrtCount M a s, a count over the representatives
     0 <= x < M prime to M with x^2 % M = a % M and s | x + 1, and rho_s(t) is orbitAvg s t with the
-    units mod s taken as 0 <= u < s prime to s. The class criterion describes H through r | M and
+    units mod s taken as 0 <= u < s prime to s. The count is defined for all M and s, but it is a
+    count of residue classes, and the prime-square term, only for M > 0 and s | M: the theorem
+    sum_orbitAvg_square carries these hypotheses and sums over the units y of ZMod M, with the
+    image of y in ZMod s taken through its least nonnegative representative, while
+    sum_orbitAvg_square_finite records the unrestricted identity over representatives, which is
+    vacuous at M = 0 and representative-dependent when s does not divide M (release v1.2.1, after
+    Palomar review). The class criterion describes H through r | M and
     ZMod.castHom and counts units of ZMod M. Releases v1.0 and v1.1 used Lean and Mathlib
     v4.35.0-rc2; v1.2 uses v4.35.0, which required one lemma rename in ModelPairs
     (Nat.prod_factorization_pow_eq_self).
@@ -299,7 +308,15 @@ alignment:
       lean: "FixedOrderFactor.sum_orbitAvg_eq_zero"
       module: "Challenge"
       status: "proved"
-    - source: "Version 3, Proposition 7.3(3), the prime-square term is s times the square-root count"
+    - source: "Version 3, Proposition 7.3(3), the finite-sum identity over the representatives 0 <= x < M (all M, s > 0; no residue-class reading unless M > 0 and s | M)"
+      lean: "FixedOrderFactor.sum_orbitAvg_square_finite"
+      module: "Challenge"
+      status: "proved"
+    - source: "Version 3, Section 7, beta(M, a, s) counts residue classes when M > 0 and s | M"
+      lean: "FixedOrderFactor.sqrtCount_eq_card_zmod"
+      module: "Challenge"
+      status: "proved"
+    - source: "Version 3, Proposition 7.3(3), the prime-square term is s times the square-root count (M > 0, s | M)"
       lean: "FixedOrderFactor.sum_orbitAvg_square"
       module: "Challenge"
       status: "proved"
