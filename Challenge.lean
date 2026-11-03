@@ -40,10 +40,15 @@ Throughout, `r` is a natural number and `N` a finite set of primes, and
   for a prime `p ≡ 1 (mod r)`, the `r` characters with `χʳ = 1` satisfy
   `∑ χ(a) conj χ(b) = r · [a/b is an r-th power mod p]`, so every pair `(d aʳ, d bʳ)` prime to `p`
   survives, while the sum over all characters vanishes for distinct `m, n < p`.
-* `sum_orbitAvg_mul`, `sum_orbitAvg_eq_zero`, `sum_orbitAvg_square`: the finite part of the
-  Chebyshev bias in families `p ≡ a (mod M)` of fixed order. The orbit average `ϱ_s` on a Frobenius
-  class sums to `s·[s ∣ c]` along `t ↦ ct`, so the class function has mean `0` and the prime-square
-  term is `s` times the square-root count `β(M, a, s) = #{x : x² ≡ a (M), x ≡ -1 (s)}`.
+* `sum_orbitAvg_mul`, `sum_orbitAvg_eq_zero`: the orbit average `ϱ_s` on a Frobenius class sums
+  to `s·[s ∣ c]` along `t ↦ ct`, so the class function has mean `0`.
+* `sum_orbitAvg_square_finite`: the finite-sum identity `∑ ∑ ϱ_s((x + 1)t) = s · β(M, a, s)` over the
+  representatives `0 ≤ x < M`, for all `M` and `s > 0`. It is vacuous at `M = 0`, and for `s ∤ M`
+  it is an identity of arithmetic counts, not of residue classes.
+* `sqrtCount_eq_card_zmod`, `sum_orbitAvg_square`: for `M > 0` and `s ∣ M`, `β(M, a, s)` counts the
+  residue classes `y ∈ (ℤ/M)ˣ` with `y² = a` and `y ≡ -1 (mod s)`, and the squares in
+  `ℤ/s ⋊ (ℤ/M)ˣ` give the prime-square term of the Chebyshev bias in families `p ≡ a (mod M)` of
+  fixed order as `s · β(M, a, s)`.
 * `sqrtCount_le_of_dvd`, `sqrtCount_top`, `sqrtCount_top_dichotomy`: the class criterion.
 * `sqrtCount_imaginary`: for the imaginary families `r` even, `M = 2r`, `a = 1 + r`, `β = 0` for
   every `s` unless `8 ∣ r`, and for `s = r/d` with `d` odd.
@@ -98,8 +103,11 @@ def zPow (r : ℕ) (S : Finset Nat.Primes) (j : S → Fin r) (m : ℕ) : ℂ :=
 /-- The prime `2` as an element of `Nat.Primes`. -/
 def two : Nat.Primes := ⟨2, Nat.prime_two⟩
 
-/-- The square-root count `β(M, a, s)`: the number of units `x` modulo `M` with `x² ≡ a (mod M)`
-and `x ≡ -1 (mod s)`, counted over the representatives `0 ≤ x < M`. -/
+/-- The square-root count `β(M, a, s)`: the number of `0 ≤ x < M` prime to `M` with
+`x² ≡ a (mod M)` and `x ≡ -1 (mod s)`. It is defined for all `M` and `s` as a count over these
+representatives; it is `0` at `M = 0`. For `M > 0` and `s ∣ M` it counts the residue classes
+`y ∈ (ℤ/M)ˣ` with `y² = a` and `y ≡ -1 (mod s)` (`sqrtCount_eq_card_zmod`), and only then does it
+carry the reading as the prime-square term of the Chebyshev bias (`sum_orbitAvg_square`). -/
 def sqrtCount (M a s : ℕ) : ℕ :=
   ((Finset.range M).filter fun x => Nat.Coprime x M ∧ x ^ 2 % M = a % M ∧ s ∣ x + 1).card
 
@@ -240,11 +248,27 @@ theorem sum_orbitAvg_mul {s : ℕ} (hs : 0 < s) (c : ℕ) :
 /-- The class function has mean zero: `∑_{t<s} ϱ_s(t) = 0` for `s > 1`. -/
 theorem sum_orbitAvg_eq_zero {s : ℕ} (hs : 1 < s) : ∑ t ∈ Finset.range s, orbitAvg s t = 0 := sorry
 
-/-- **The square-root count.** With `(t, x)² = ((1 + x)t, x²)` in `ℤ/s ⋊ (ℤ/M)ˣ`, the prime-square
-term of the explicit formula is `∑_{x² ≡ a} ∑_{t<s} ϱ_s((x + 1)t) = s · β(M, a, s)`. -/
-theorem sum_orbitAvg_square {s : ℕ} (hs : 0 < s) (M a : ℕ) :
+/-- **The finite-sum identity**, over the representatives `0 ≤ x < M`, for all `M` and `s > 0`:
+`∑_{x² ≡ a} ∑_{t<s} ϱ_s((x + 1)t) = s · β(M, a, s)`. It is vacuous at `M = 0`, and for `s ∤ M` it is
+an identity of arithmetic counts that depend on the representatives, not a count of residue classes.
+The group-theoretic reading is `sum_orbitAvg_square`, under `M > 0` and `s ∣ M`. -/
+theorem sum_orbitAvg_square_finite {s : ℕ} (hs : 0 < s) (M a : ℕ) :
     ∑ x ∈ (Finset.range M).filter (fun x => Nat.Coprime x M ∧ x ^ 2 % M = a % M),
       ∑ t ∈ Finset.range s, orbitAvg s ((x + 1) * t) = s * sqrtCount M a s := sorry
+
+/-- **The residue-class reading.** For `M > 0` and `s ∣ M`, `β(M, a, s)` counts the units `y` of
+`ℤ/M` with `y² = a` and `y ≡ -1 (mod s)`. -/
+theorem sqrtCount_eq_card_zmod {M : ℕ} [NeZero M] {s : ℕ} (hs : s ∣ M) (a : ℕ) :
+    sqrtCount M a s = (Finset.univ.filter fun y : ZMod M =>
+      IsUnit y ∧ y ^ 2 = a ∧ ZMod.castHom hs (ZMod s) y = -1).card := sorry
+
+/-- **The prime-square term.** For `M > 0` and `s ∣ M`, the squares `(t, y)² = ((1 + y)t, y²)` of the
+elements of `ℤ/s ⋊ (ℤ/M)ˣ` lying over `a` give
+`∑_{y ∈ (ℤ/M)ˣ, y² = a} ∑_{t<s} ϱ_s((ȳ + 1)t) = s · β(M, a, s)`, where `ȳ ∈ ℤ/s` is the image of `y`. -/
+theorem sum_orbitAvg_square {M : ℕ} [NeZero M] {s : ℕ} (hs : s ∣ M) (a : ℕ) :
+    ∑ y ∈ Finset.univ.filter (fun y : ZMod M => IsUnit y ∧ y ^ 2 = a),
+      ∑ t ∈ Finset.range s, orbitAvg s (((ZMod.castHom hs (ZMod s) y).val + 1) * t) =
+      s * sqrtCount M a s := sorry
 
 /-- `β` is nondecreasing as `s` decreases along divisibility. -/
 theorem sqrtCount_le_of_dvd (M a : ℕ) {s s' : ℕ} (h : s' ∣ s) :

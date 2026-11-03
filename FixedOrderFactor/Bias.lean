@@ -19,8 +19,15 @@ finite computation that produces `β` and the arithmetic of `β`:
 * `sum_rootOfUnity_mul`, `sum_orbitAvg_mul`: `∑_{t<s} ϱ_s(ct) = s·[s ∣ c]`, where
   `ϱ_s(t) = φ(s)⁻¹ ∑_{u ∈ (ℤ/s)ˣ} e^{2πiut/s}` is the orbit average on the Frobenius class.
 * `sum_orbitAvg_eq_zero`: the class function has mean zero, `∑_{t<s} ϱ_s(t) = 0` for `s > 1`.
-* `sum_orbitAvg_square`: the prime-square term. The squares `(t, x)² = ((1 + x)t, x²)` of the
-  elements of `ℤ/s ⋊ (ℤ/M)ˣ` give `∑_{x² = a} ∑_{t<s} ϱ_s((x + 1)t) = s · β(M, a, s)`.
+* `sum_orbitAvg_square_finite`: the finite-sum identity
+  `∑_{0 ≤ x < M, (x, M) = 1, x² ≡ a} ∑_{t<s} ϱ_s((x + 1)t) = s · β(M, a, s)`, for all `M` and `s > 0`.
+  It is an identity of arithmetic counts over the representatives `0 ≤ x < M`: it is vacuous at
+  `M = 0`, and when `s ∤ M` the count depends on the representatives and is not a count of residue
+  classes. It carries no group-theoretic reading in that generality.
+* `sum_orbitAvg_square`: the prime-square term, for `M > 0` and `s ∣ M`. The squares
+  `(t, y)² = ((1 + y)t, y²)` of the elements of `ℤ/s ⋊ (ℤ/M)ˣ` give
+  `∑_{y ∈ (ℤ/M)ˣ, y² = a} ∑_{t<s} ϱ_s((ȳ + 1)t) = s · β(M, a, s)`, with `ȳ` the image of `y` in
+  `ℤ/s`; here `β(M, a, s)` counts residue classes (`sqrtCount_eq_card_zmod`).
 * `sqrtCount_le_of_dvd`: `β` is nondecreasing as `s` decreases along divisibility.
 * `sqrtCount_eq_card_zmod`, `sqrtCount_top`, `sqrtCount_top_dichotomy`: at `s = r`,
   `x ↦ -x` identifies the count with the square roots of `a` in `H = ker((ℤ/M)ˣ → (ℤ/r)ˣ)`, and
@@ -79,9 +86,11 @@ theorem sum_orbitAvg_eq_zero' {s : ℕ} (hs : 1 < s) : ∑ t ∈ range s, orbitA
   have := Nat.le_of_dvd one_pos hd
   omega
 
-/-- **The prime-square term.** With `(t, x)² = ((1 + x)t, x²)` in `ℤ/s ⋊ (ℤ/M)ˣ`,
-`∑_{x² ≡ a} ∑_{t<s} ϱ_s((x + 1)t) = s · β(M, a, s)`. -/
-theorem sum_orbitAvg_square' {s : ℕ} (hs : 0 < s) (M a : ℕ) :
+/-- **The finite-sum identity** behind the prime-square term, over the representatives
+`0 ≤ x < M`, for all `M` and `s > 0`: `∑_{x² ≡ a} ∑_{t<s} ϱ_s((x + 1)t) = s · β(M, a, s)`. It is
+vacuous at `M = 0`, and for `s ∤ M` it is an identity of arithmetic counts, not of residue classes;
+the group-theoretic reading is `sum_orbitAvg_square'`, under `M > 0` and `s ∣ M`. -/
+theorem sum_orbitAvg_square_finite' {s : ℕ} (hs : 0 < s) (M a : ℕ) :
     ∑ x ∈ (range M).filter (fun x => Nat.Coprime x M ∧ x ^ 2 % M = a % M),
       ∑ t ∈ range s, orbitAvg s ((x + 1) * t) = s * sqrtCount M a s := by
   simp_rw [sum_orbitAvg_mul' hs]
@@ -107,8 +116,9 @@ lemma castHom_natCast_eq_neg_one_iff {s : ℕ} (hs : s ∣ M) (x : ℕ) :
   rw [map_natCast, ← ZMod.natCast_eq_zero_iff, Nat.cast_add, Nat.cast_one,
     eq_neg_iff_add_eq_zero]
 
-/-- With `s ∣ M`, `β(M, a, s)` counts the units `y` of `ℤ/M` with `y² = a` and `y ≡ -1 (mod s)`. -/
-theorem sqrtCount_eq_card_zmod {s : ℕ} (hs : s ∣ M) (a : ℕ) :
+/-- **The residue-class reading.** For `M > 0` and `s ∣ M`, `β(M, a, s)` counts the units `y` of
+`ℤ/M` with `y² = a` and `y ≡ -1 (mod s)`. -/
+theorem sqrtCount_eq_card_zmod' {s : ℕ} (hs : s ∣ M) (a : ℕ) :
     sqrtCount M a s = (univ.filter fun y : ZMod M =>
       IsUnit y ∧ y ^ 2 = a ∧ ZMod.castHom hs (ZMod s) y = -1).card := by
   unfold sqrtCount
@@ -132,12 +142,33 @@ theorem sqrtCount_eq_card_zmod {s : ℕ} (hs : s ∣ M) (a : ℕ) :
   · intro y _
     exact ZMod.natCast_zmod_val y
 
+/-- **The prime-square term.** For `M > 0` and `s ∣ M`, the squares `(t, y)² = ((1 + y)t, y²)` of
+the elements of `ℤ/s ⋊ (ℤ/M)ˣ` lying over `a` give
+`∑_{y ∈ (ℤ/M)ˣ, y² = a} ∑_{t<s} ϱ_s((ȳ + 1)t) = s · β(M, a, s)`, where `ȳ ∈ ℤ/s` is the image of `y`
+(taken through its least nonnegative representative) and `β(M, a, s)` is the number of residue
+classes `y` with `y² = a` and `ȳ = -1`. -/
+theorem sum_orbitAvg_square' {s : ℕ} (hs : s ∣ M) (a : ℕ) :
+    ∑ y ∈ univ.filter (fun y : ZMod M => IsUnit y ∧ y ^ 2 = a),
+      ∑ t ∈ range s, orbitAvg s (((ZMod.castHom hs (ZMod s) y).val + 1) * t) =
+      s * sqrtCount M a s := by
+  have hs0 : 0 < s := Nat.pos_of_dvd_of_pos hs (Nat.pos_of_ne_zero (NeZero.ne M))
+  have : NeZero s := ⟨hs0.ne'⟩
+  simp_rw [sum_orbitAvg_mul' hs0]
+  have hiff : ∀ y : ZMod M, s ∣ (ZMod.castHom hs (ZMod s) y).val + 1 ↔
+      ZMod.castHom hs (ZMod s) y = -1 := by
+    intro y
+    rw [← ZMod.natCast_eq_zero_iff, Nat.cast_add, Nat.cast_one, ZMod.natCast_zmod_val,
+      eq_neg_iff_add_eq_zero]
+  simp_rw [hiff]
+  rw [← sum_filter, sum_const, nsmul_eq_mul, filter_filter, mul_comm, sqrtCount_eq_card_zmod' hs]
+  simp only [and_assoc]
+
 /-- **At the top level** (`s = r`, the `b` with `d(b) = 1`): `x ↦ -x` identifies `β(M, a, r)` with
 the number of square roots of `a` in `H = {h ∈ (ℤ/M)ˣ : h ≡ 1 (mod r)}`. -/
 theorem sqrtCount_top' {r : ℕ} (hr : r ∣ M) (a : ℕ) :
     sqrtCount M a r = (univ.filter fun h : ZMod M =>
       IsUnit h ∧ h ^ 2 = a ∧ ZMod.castHom hr (ZMod r) h = 1).card := by
-  rw [sqrtCount_eq_card_zmod hr]
+  rw [sqrtCount_eq_card_zmod' hr]
   refine card_nbij' (fun y => -y) (fun y => -y) ?_ ?_ ?_ ?_
   · intro y hy
     simp only [coe_filter, mem_univ, true_and, Set.mem_ofPred_eq] at hy ⊢

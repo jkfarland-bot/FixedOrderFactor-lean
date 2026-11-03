@@ -172,12 +172,30 @@ theorem sum_orbitAvg_mul {s : ℕ} (hs : 0 < s) (c : ℕ) :
 theorem sum_orbitAvg_eq_zero {s : ℕ} (hs : 1 < s) : ∑ t ∈ Finset.range s, orbitAvg s t = 0 :=
   sum_orbitAvg_eq_zero' hs
 
-/-- **The square-root count.** With `(t, x)² = ((1 + x)t, x²)` in `ℤ/s ⋊ (ℤ/M)ˣ`, the prime-square
-term of the explicit formula is `∑_{x² ≡ a} ∑_{t<s} ϱ_s((x + 1)t) = s · β(M, a, s)`. -/
-theorem sum_orbitAvg_square {s : ℕ} (hs : 0 < s) (M a : ℕ) :
+/-- **The finite-sum identity**, over the representatives `0 ≤ x < M`, for all `M` and `s > 0`:
+`∑_{x² ≡ a} ∑_{t<s} ϱ_s((x + 1)t) = s · β(M, a, s)`. It is vacuous at `M = 0`, and for `s ∤ M` it is
+an identity of arithmetic counts that depend on the representatives, not a count of residue classes.
+The group-theoretic reading is `sum_orbitAvg_square`, under `M > 0` and `s ∣ M`. -/
+theorem sum_orbitAvg_square_finite {s : ℕ} (hs : 0 < s) (M a : ℕ) :
     ∑ x ∈ (Finset.range M).filter (fun x => Nat.Coprime x M ∧ x ^ 2 % M = a % M),
       ∑ t ∈ Finset.range s, orbitAvg s ((x + 1) * t) = s * sqrtCount M a s :=
-  sum_orbitAvg_square' hs M a
+  sum_orbitAvg_square_finite' hs M a
+
+/-- **The residue-class reading.** For `M > 0` and `s ∣ M`, `β(M, a, s)` counts the units `y` of
+`ℤ/M` with `y² = a` and `y ≡ -1 (mod s)`. -/
+theorem sqrtCount_eq_card_zmod {M : ℕ} [NeZero M] {s : ℕ} (hs : s ∣ M) (a : ℕ) :
+    sqrtCount M a s = (Finset.univ.filter fun y : ZMod M =>
+      IsUnit y ∧ y ^ 2 = a ∧ ZMod.castHom hs (ZMod s) y = -1).card :=
+  sqrtCount_eq_card_zmod' hs a
+
+/-- **The prime-square term.** For `M > 0` and `s ∣ M`, the squares `(t, y)² = ((1 + y)t, y²)` of the
+elements of `ℤ/s ⋊ (ℤ/M)ˣ` lying over `a` give
+`∑_{y ∈ (ℤ/M)ˣ, y² = a} ∑_{t<s} ϱ_s((ȳ + 1)t) = s · β(M, a, s)`, where `ȳ ∈ ℤ/s` is the image of `y`. -/
+theorem sum_orbitAvg_square {M : ℕ} [NeZero M] {s : ℕ} (hs : s ∣ M) (a : ℕ) :
+    ∑ y ∈ Finset.univ.filter (fun y : ZMod M => IsUnit y ∧ y ^ 2 = a),
+      ∑ t ∈ Finset.range s, orbitAvg s (((ZMod.castHom hs (ZMod s) y).val + 1) * t) =
+      s * sqrtCount M a s :=
+  sum_orbitAvg_square' hs a
 
 /-- `β` is nondecreasing as `s` decreases along divisibility. -/
 theorem sqrtCount_le_of_dvd (M a : ℕ) {s s' : ℕ} (h : s' ∣ s) :
