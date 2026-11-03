@@ -3,8 +3,9 @@
 Lean 4 / Mathlib formalization accompanying J. S. Farland, *The factor 35/34: fourth powers in
 the mean square of L(1, χ) over quartic characters* (preprint, Zenodo; all versions
 [doi:10.5281/zenodo.23488965](https://doi.org/10.5281/zenodo.23488965); version 2 is
-[doi:10.5281/zenodo.23491467](https://doi.org/10.5281/zenodo.23491467), and version 3, which adds Section 7, is
-[doi:10.5281/zenodo.23849628](https://doi.org/10.5281/zenodo.23849628).
+[doi:10.5281/zenodo.23491467](https://doi.org/10.5281/zenodo.23491467), version 3, which adds Section 7, is
+[doi:10.5281/zenodo.23849628](https://doi.org/10.5281/zenodo.23849628), and version 4, which matches release v1.2.1, is
+[doi:10.5281/zenodo.23904966](https://doi.org/10.5281/zenodo.23904966)).
 
 Archived on Zenodo: [doi:10.5281/zenodo.23489277](https://doi.org/10.5281/zenodo.23489277)
 (all versions; release v1.0 is [doi:10.5281/zenodo.23489278](https://doi.org/10.5281/zenodo.23489278), release v1.2 is
