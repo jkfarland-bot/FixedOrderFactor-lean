@@ -66,7 +66,10 @@ No `sorry`, no `native_decide`. Every result depends only on `propext`, `Classic
 - `Challenge.lean` is the statement surface a reader should audit. It restates the definitions
   exactly as the development has them and states the twenty-nine results with `sorry`.
 - `Solution.lean` proves the same declarations from the development in `FixedOrderFactor/`.
-- `comparator.json` lists the compared theorems and definitions and the permitted axioms.
+- `comparator.json` lists the compared theorems and the permitted axioms. Its `definition_names`
+  is empty, so Comparator compares every definition the statements use with the development's,
+  bodies included (earlier releases listed the definitions as holes, which compares only their
+  names and types).
 - `formalization.yaml` records authorship, sources, AI assistance, scope and fidelity.
 - `scripts/` holds Palomar's checks, copied from the
   [Palomar starter template](https://github.com/PalomarRegistry/PalomarTemplate).
