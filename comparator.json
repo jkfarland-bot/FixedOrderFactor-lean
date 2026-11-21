@@ -34,21 +34,7 @@
     "FixedOrderFactor.sqrtCount_imaginary",
     "FixedOrderFactor.sqrtCount_table"
   ],
-  "definition_names": [
-    "FixedOrderFactor.PrimeTo",
-    "FixedOrderFactor.instDecidablePrimeTo",
-    "FixedOrderFactor.zetaN",
-    "FixedOrderFactor.correctionFactor",
-    "FixedOrderFactor.rootOfUnity",
-    "FixedOrderFactor.localTerm",
-    "FixedOrderFactor.muAvg",
-    "FixedOrderFactor.modelMean",
-    "FixedOrderFactor.primesUpTo",
-    "FixedOrderFactor.zPow",
-    "FixedOrderFactor.two",
-    "FixedOrderFactor.sqrtCount",
-    "FixedOrderFactor.orbitAvg"
-  ],
+  "definition_names": [],
   "permitted_axioms": [
     "propext",
     "Quot.sound",

@@ -2,7 +2,7 @@ module
 
 public import Mathlib
 
-public section
+@[expose] public section
 
 /-!
 # The order-`r` correction factor for mean squares of `L(1, χ)`
