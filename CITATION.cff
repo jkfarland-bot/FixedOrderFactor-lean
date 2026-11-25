@@ -4,6 +4,7 @@ title: "FixedOrderFactor-lean: a Lean 4 formalization of the order-r correction 
 authors:
   - family-names: Farland
     given-names: Joseph S.
+    orcid: "https://orcid.org/0009-0007-6809-804X"
 version: v1.2.2
 date-released: 2026-11-20
 doi: 10.5281/zenodo.23489277
@@ -22,6 +23,7 @@ preferred-citation:
   authors:
     - family-names: Farland
       given-names: Joseph S.
+      orcid: "https://orcid.org/0009-0007-6809-804X"
   year: 2026
   doi: 10.5281/zenodo.23488965
   notes: "Preprint, Zenodo, all versions; version 3 (doi:10.5281/zenodo.23849628) adds Section 7 on square-root counts; version 4 (doi:10.5281/zenodo.23904966) matches release v1.2.1"
